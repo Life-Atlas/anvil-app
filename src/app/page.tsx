@@ -767,6 +767,55 @@ export default function HomePage() {
       {/* Footer */}
       <footer className="border-t border-slate-800/60 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* SMILE Ecosystem strip */}
+          <div className="mb-12 glass rounded-2xl p-6 border border-amber-500/15">
+            <p className="text-amber-400 font-semibold text-xs uppercase tracking-widest mb-4">
+              Part of the SMILE Ecosystem
+            </p>
+            <div className="flex flex-wrap items-center gap-x-8 gap-y-3 mb-5">
+              <a
+                href="https://github.com/Life-Atlas/smile-api"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-amber-300 text-sm font-medium transition-colors"
+              >
+                SMILE as a Service
+              </a>
+              <a
+                href="https://github.com/Life-Atlas/crucible-app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-amber-300 text-sm font-medium transition-colors"
+              >
+                CRUCIBLE — Proposal Analyzer
+              </a>
+              <a
+                href="https://lifeatlas.github.io/the-sentinel-seed/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-amber-300 text-sm font-medium transition-colors"
+              >
+                Research Library
+              </a>
+              <a
+                href="https://lifeatlas.online"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-amber-300 text-sm font-medium transition-colors"
+              >
+                lifeatlas.online
+              </a>
+            </div>
+            <a
+              href="https://calendly.com/futurecreation"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-600/15 border border-amber-500/25 text-amber-300 text-sm font-semibold hover:bg-amber-600/25 transition-all"
+            >
+              Book a consulting session — Nicolas Waern / WINNIIO AB
+            </a>
+          </div>
+
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2">
               <div className="flex items-center gap-2 mb-4">
@@ -827,7 +876,7 @@ export default function HomePage() {
 
           <div className="border-t border-slate-800/60 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-slate-600 text-sm">
-              2026 WINNIIO AB · Gothenburg, Sweden
+              2026 Nicolas Waern / WINNIIO AB · Gothenburg, Sweden
             </p>
             <div className="flex items-center gap-6">
               <a href="/privacy" className="text-slate-600 hover:text-slate-400 text-xs transition-colors">Privacy</a>
