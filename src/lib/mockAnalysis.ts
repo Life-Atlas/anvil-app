@@ -40,11 +40,41 @@ export interface AnvilAnalysisResult {
     transcend: number; // 0–5
   };
 
-  antReality: {
-    realityAsActor: number;     // 0–5
-    nonHumanActants: number;    // 0–5
-    obligatoryPassage: number;  // 0–5
-    translationMoments: number; // 0–5
+  /** Detailed breakdown — all 37 metrics grouped by dimension */
+  dimensionScores: {
+    structural: {
+      abstractPresent: number;        // 0–5
+      imradStructure: number;         // 0–5
+      allSectionsPresent: number;     // 0–5
+      logicalFlow: number;            // 0–5
+      wordCountAppropriate: number;   // 0–5
+    };
+    citations: {
+      citationDensity: number;        // 0–5
+      selfCitationRatio: number;      // 0–5  (inverted: low ratio = high score)
+      citationRecency: number;        // 0–5  (% from last 5 years)
+      orphanedReferences: number;     // 0–5  (inverted: 0 orphans = 5)
+      missingReferences: number;      // 0–5  (inverted: 0 missing = 5)
+    };
+    theory: {
+      frameworkApplicationDepth: number;  // 0–5
+      counterArgumentEngagement: number;  // 0–5
+      theoreticalGrounding: number;       // 0–5
+      literaturePositioning: number;      // 0–5
+      conceptualClarity: number;          // 0–5
+    };
+    methodology: {
+      falsifiablePropositions: number;    // 0–5
+      effectSizesSpecified: number;       // 0–5
+      limitationsSubstantive: number;     // 0–5
+      futureWorkConcrete: number;         // 0–5
+      reproducibilityDetail: number;      // 0–5
+    };
+    writing: {
+      proseClarity: number;               // 0–5
+      apa7Compliance: number;             // 0–5
+      anonymisationCompliance: number;    // 0–5
+    };
   };
 
   findings: Finding[];
@@ -54,23 +84,25 @@ export interface AnvilAnalysisResult {
   topWeaknesses: string[];
 
   layers: {
-    structural: { score: number; label: string };
-    callAlignment: { score: number; label: string };
-    smile: { score: number; label: string };
-    antiPatterns: { count: number; critical: number; major: number };
+    structural:   { score: number; label: string };
+    citations:    { score: number; label: string };
+    theory:       { score: number; label: string };
+    methodology:  { score: number; label: string };
+    smile:        { score: number; label: string };
     perspectives: { score: number; label: string };
-    aest: { score: number; label: string };
-    antReality: { score: number; label: string };
+    aest:         { score: number; label: string };
+    antiPatterns: { count: number; critical: number; major: number };
   };
 }
 
-// Keep the exported type alias so existing imports of CrucibleAnalysisResult still resolve
+// Keep legacy alias for any remaining imports
 export type CrucibleAnalysisResult = AnvilAnalysisResult;
 
 export const MOCK_ANALYSIS: AnvilAnalysisResult = {
   proposalId: "mock-paper-001",
   analyzedAt: new Date().toISOString(),
-  proposalTitle: "Boundary Objects in Digital Twin Implementation: An Actor-Network Analysis of Municipal Infrastructure Projects",
+  proposalTitle:
+    "Boundary Objects in Digital Twin Implementation: An Actor-Network Analysis of Municipal Infrastructure Projects",
   tier: "pro",
 
   overallScore: 58,
@@ -107,11 +139,40 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
     transcend: 1.9,
   },
 
-  antReality: {
-    realityAsActor: 3.2,
-    nonHumanActants: 2.6,
-    obligatoryPassage: 2.0,
-    translationMoments: 1.8,
+  dimensionScores: {
+    structural: {
+      abstractPresent: 5.0,
+      imradStructure: 4.2,
+      allSectionsPresent: 3.5,
+      logicalFlow: 3.8,
+      wordCountAppropriate: 4.5,
+    },
+    citations: {
+      citationDensity: 3.0,
+      selfCitationRatio: 1.5,   // 45% self-citation → low score
+      citationRecency: 3.4,
+      orphanedReferences: 2.0,  // Geels (2004) orphaned
+      missingReferences: 3.0,
+    },
+    theory: {
+      frameworkApplicationDepth: 1.5,  // ANT cited decoratively
+      counterArgumentEngagement: 2.8,
+      theoreticalGrounding: 3.2,
+      literaturePositioning: 3.6,
+      conceptualClarity: 3.0,
+    },
+    methodology: {
+      falsifiablePropositions: 1.8,   // hypothesis not falsifiable
+      effectSizesSpecified: 1.5,
+      limitationsSubstantive: 1.2,    // 47 words
+      futureWorkConcrete: 2.4,
+      reproducibilityDetail: 2.8,
+    },
+    writing: {
+      proseClarity: 4.0,
+      apa7Compliance: 3.2,
+      anonymisationCompliance: 3.0,   // company name + GitHub link
+    },
   },
 
   findings: [
@@ -133,7 +194,7 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "Of the 38 citations in the reference list, 17 are self-citations by the authors. This 45% self-citation rate significantly exceeds the commonly accepted 30% threshold and creates an appearance of citation bias. Double-blind reviewers who identify the authors through their citation patterns may flag this explicitly.",
       severity: "critical",
-      layer: "Citation Integrity",
+      layer: "Citation Quality",
       antiPattern: "CI-04: Self-Citation Bias",
       recommendation:
         "Replace at least 8 self-citations with equivalent third-party literature that makes the same theoretical or empirical points. Retain self-citations only where they represent unique datasets or validated frameworks not available elsewhere in the literature.",
@@ -145,10 +206,10 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The central proposition — 'Digital twins improve coordination in municipal infrastructure projects' — is not falsifiable as written. 'Improve' is undefined, the comparison baseline is absent, and no operationalisation of 'coordination' is provided. A reviewer operating under Popperian standards will reject this as a research hypothesis.",
       severity: "critical",
-      layer: "Falsifiability Check",
-      antiPattern: "FA-02: Non-falsifiable Proposition",
+      layer: "Methodology and Rigour",
+      antiPattern: "MR-02: Non-falsifiable Proposition",
       recommendation:
-        "Restate the hypothesis with: a measurable dependent variable (e.g. 'coordination latency measured in days to decision'), a defined comparison condition (with vs. without digital twin support), a minimum effect size (e.g. ≥20% reduction), and a specified measurement instrument.",
+        "Restate the hypothesis with: a measurable dependent variable (e.g. 'coordination latency measured in days to decision'), a defined comparison condition (with vs. without digital twin support), a minimum effect size (e.g. 20% reduction), and a specified measurement instrument.",
       pageRef: "Section 1.3, p. 4",
     },
     {
@@ -157,10 +218,10 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "Six journal article entries in the reference list lack DOI links despite the articles having registered DOIs. APA 7th edition (2020) mandates DOI inclusion for all journal articles where available. This signals incomplete reference management.",
       severity: "major",
-      layer: "Citation Integrity",
+      layer: "Citation Quality",
       antiPattern: "CI-01: APA 7th Non-compliance",
       recommendation:
-        "Run the reference list through a DOI lookup tool (CrossRef, DOI.org) and add the missing DOIs. Check the complete list against APA 7th formatting rules — also verify author et al. thresholds (3+ authors → et al. from first citation).",
+        "Run the reference list through a DOI lookup tool (CrossRef, DOI.org) and add the missing DOIs. Also verify author et al. thresholds (3+ authors → et al. from first citation).",
       pageRef: "Reference list, pp. 18–21",
     },
     {
@@ -178,10 +239,10 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       id: "f006",
       title: "No replication package or open data statement",
       description:
-        "The paper presents interview data and document analysis but provides no information about data availability, anonymisation protocols, or replication package. Many journals in information systems and science & technology studies now require FAIR data statements.",
+        "The paper presents interview data and document analysis but provides no information about data availability, anonymisation protocols, or replication package. Many journals in information systems and science and technology studies now require FAIR data statements.",
       severity: "major",
-      layer: "Anonymisation & Compliance",
-      antiPattern: "AC-03: No Open Data Statement",
+      layer: "Methodology and Rigour",
+      antiPattern: "MR-05: No Reproducibility Statement",
       recommendation:
         "Add a Data Availability Statement section specifying: interview transcripts are confidential per ethics approval (cite approval number), analysis codes and coding scheme are available from the corresponding author on reasonable request, and any documentary sources that are public are listed in an appendix.",
     },
@@ -191,8 +252,8 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The results section reports that digital twins 'significantly reduced' coordination latency and 'notably improved' stakeholder alignment. No quantitative effect sizes, confidence intervals, or statistical significance values are provided despite the paper collecting structured interview data that could support quantification.",
       severity: "major",
-      layer: "Falsifiability Check",
-      antiPattern: "FA-05: Effect Size Absent",
+      layer: "Methodology and Rigour",
+      antiPattern: "MR-03: Effect Size Absent",
       recommendation:
         "Quantify the central claims: report average latency reduction with standard deviation, or if using qualitative data exclusively, explicitly reframe findings as 'descriptive' and 'exploratory' rather than 'significant' and 'notable' — terms that imply statistical warrant you have not provided.",
       pageRef: "Section 3.2, pp. 10–12",
@@ -203,7 +264,7 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The paper cites 'Geels (2004)' in Section 2.3 but no Geels 2004 entry appears in the reference list. This is either a missing reference or a citation to the wrong year of publication.",
       severity: "major",
-      layer: "Citation Integrity",
+      layer: "Citation Quality",
       antiPattern: "CI-02: Orphaned Citation",
       recommendation:
         "Identify whether you meant Geels (2002) 'Technological transitions as evolutionary reconfiguration processes' or Geels (2004) 'From sectoral systems of innovation to socio-technical systems' and add the correct full entry to the reference list.",
@@ -215,8 +276,8 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The limitations section (Section 5.2) runs to only 47 words and states only that the study is limited to three municipalities. It makes no mention of selection bias in interviewee recruitment, temporal limitations of the study window, generalisability boundaries, or researcher positionality.",
       severity: "minor",
-      layer: "Falsifiability Check",
-      antiPattern: "FA-06: Perfunctory Limitations",
+      layer: "Methodology and Rigour",
+      antiPattern: "MR-04: Perfunctory Limitations",
       recommendation:
         "Expand to at least 200 words addressing: interviewee selection criteria and potential bias, time-bounding of the study, transferability conditions (what types of municipal projects would and would not generalise), and a brief positionality statement.",
       pageRef: "Section 5.2, p. 16",
@@ -227,8 +288,8 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The methods section mentions 'the Siemens-provided digital twin platform used in Case B'. This identifies a specific commercial vendor in a way that may de-anonymise the case organisation and could compromise double-blind review if the organisation is publicly known to use this platform.",
       severity: "minor",
-      layer: "Anonymisation & Compliance",
-      antiPattern: "AC-01: Identifying Information",
+      layer: "Writing Quality",
+      antiPattern: "WQ-03: Identifying Information in Blind Submission",
       recommendation:
         "Replace with a generic descriptor: 'a commercial BIM-integrated digital twin platform (vendor details available post-review)'. Ensure the same anonymisation is applied to all technology-specific references that could identify participant organisations.",
       pageRef: "Section 2.4, p. 9",
@@ -250,7 +311,7 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       description:
         "The methods section (Section 3, 4 pages) contains only 3 citations — a density of 0.75/page against the target of 2–3/page. This signals that the methodological choices are being presented as self-evident rather than grounded in established research methodology literature.",
       severity: "minor",
-      layer: "Citation Integrity",
+      layer: "Citation Quality",
       recommendation:
         "Add citations for each major methodological choice: case study design (Yin, 2018), semi-structured interview protocol (Brinkmann, 2013), thematic analysis (Braun and Clarke, 2006 or 2019 reflexive update), and purposive sampling rationale (Patton, 2015).",
       pageRef: "Section 3, pp. 9–12",
@@ -259,10 +320,10 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
       id: "f013",
       title: "GitHub link identifies research group",
       description:
-        "Footnote 7 contains a GitHub URL (github.com/[lab-name]/dt-study) that directly identifies the research group and breaks double-blind anonymisation.",
+        "Footnote 7 contains a GitHub URL that directly identifies the research group and breaks double-blind anonymisation.",
       severity: "info",
-      layer: "Anonymisation & Compliance",
-      antiPattern: "AC-02: De-anonymising URL",
+      layer: "Writing Quality",
+      antiPattern: "WQ-02: De-anonymising URL",
       recommendation:
         "Replace with '[GitHub repository — URL provided post-review]' or use an anonymous review link service such as anonymized.io for the submission version.",
       pageRef: "Footnote 7, p. 10",
@@ -287,12 +348,13 @@ export const MOCK_ANALYSIS: AnvilAnalysisResult = {
   ],
 
   layers: {
-    structural: { score: 64, label: "Acceptable" },
-    callAlignment: { score: 74, label: "Good" },
-    smile: { score: 63, label: "Acceptable" },
-    antiPatterns: { count: 13, critical: 3, major: 5 },
+    structural:   { score: 68, label: "Acceptable" },
+    citations:    { score: 52, label: "Needs Work" },
+    theory:       { score: 48, label: "Needs Work" },
+    methodology:  { score: 60, label: "Acceptable" },
+    smile:        { score: 63, label: "Acceptable" },
     perspectives: { score: 60, label: "Acceptable" },
-    aest: { score: 54, label: "Needs Work" },
-    antReality: { score: 48, label: "Needs Work" },
+    aest:         { score: 54, label: "Needs Work" },
+    antiPatterns: { count: 13, critical: 3, major: 5 },
   },
 };

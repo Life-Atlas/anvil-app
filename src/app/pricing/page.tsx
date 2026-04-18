@@ -5,42 +5,45 @@ import PricingCard from "@/components/PricingCard";
 export const metadata: Metadata = {
   title: "Pricing — ANVIL Academic Paper Quality Scorer",
   description:
-    "ANVIL pricing: Free tier with 1 paper/month and basic citation check. Pro EUR 29/month for unlimited papers and full 7-layer analysis. Enterprise for API and batch scoring.",
+    "ANVIL pricing: Free tier with 1 paper/month and basic citation check. Pro EUR 29/month for unlimited papers and full 37-metric analysis. Enterprise with API and custom rubrics.",
 };
 
 const FREE_FEATURES = [
-  { text: "1 paper/month", included: true, highlight: true },
-  { text: "Basic citation check (APA 7th)", included: true, highlight: true },
-  { text: "Self-citation ratio detection", included: true },
-  { text: "Top 5 quality findings", included: true },
+  { text: "1 paper per month", included: true, highlight: true },
+  { text: "Basic citation check (density, self-citation ratio)", included: true, highlight: true },
+  { text: "Top 5 findings by severity", included: true },
+  { text: "Overall publication readiness score", included: true },
   { text: "No signup required", included: true },
-  { text: "Full 7-layer ANVIL analysis", included: false },
-  { text: "SMILE radar (6 dimensions)", included: false },
-  { text: "PDF & JSON report export", included: false },
-  { text: "Actionable fix recommendations", included: false },
+  { text: "Full 37-metric ANVIL analysis", included: false },
+  { text: "S.M.I.L.E. radar (6 dimensions)", included: false },
+  { text: "Four Perspectives analysis", included: false },
+  { text: "AEST temporal depth", included: false },
+  { text: "PDF & JSON export", included: false },
 ];
 
 const PRO_FEATURES = [
+  { text: "Everything in Free, plus:", included: true },
   { text: "Unlimited papers per month", included: true, highlight: true },
-  { text: "Full 7-layer ANVIL analysis", included: true, highlight: true },
-  { text: "SMILE methodology radar", included: true, highlight: true },
-  { text: "Four Perspectives radar", included: true, highlight: true },
-  { text: "AEST temporal depth scoring", included: true },
+  { text: "Full 37-metric ANVIL analysis", included: true, highlight: true },
+  { text: "S.M.I.L.E. radar (6 dimensions)", included: true, highlight: true },
+  { text: "Four Perspectives analysis", included: true, highlight: true },
+  { text: "AEST temporal depth analysis", included: true, highlight: true },
+  { text: "PDF report export — co-author ready", included: true },
+  { text: "JSON export for your workflow", included: true },
+  { text: "Batch mode — score multiple drafts", included: true },
+  { text: "Venue-specific citation style checks", included: true },
   { text: "Anonymisation compliance check", included: true },
-  { text: "PDF & JSON report export", included: true },
-  { text: "Actionable fix recommendations", included: true },
-  { text: "Analysis history & comparisons", included: true },
   { text: "Priority email support", included: true },
 ];
 
 const ENTERPRISE_FEATURES = [
   { text: "Everything in Pro, plus:", included: true },
-  { text: "REST API access (500 calls/mo)", included: true, highlight: true },
-  { text: "Batch scoring (50+ papers)", included: true, highlight: true },
-  { text: "Custom rubrics per journal", included: true, highlight: true },
-  { text: "Team accounts (up to 25 users)", included: true },
+  { text: "REST API access (500 calls/month)", included: true, highlight: true },
+  { text: "Team accounts (up to 25 researchers)", included: true, highlight: true },
+  { text: "Custom rubrics per journal or funder", included: true, highlight: true },
+  { text: "Institutional dashboards", included: true },
+  { text: "Batch processing — 50+ papers", included: true },
   { text: "White-label report branding", included: true },
-  { text: "Custom quality issue library", included: true },
   { text: "Priority support (4h SLA)", included: true },
   { text: "Dedicated onboarding session", included: true },
   { text: "SSO / SAML integration", included: true },
@@ -48,58 +51,59 @@ const ENTERPRISE_FEATURES = [
 
 const FAQ = [
   {
-    q: "What does the free tier actually check?",
-    a: "The free tier runs a basic citation integrity scan: APA 7th compliance on the reference list, self-citation ratio calculation, orphaned and ghost citation detection, and citation density per section. You receive the top 5 findings. This alone catches the issues that most commonly trigger reviewer flags.",
+    q: "Is the free tier actually useful or just a teaser?",
+    a: "It is genuinely useful. You get an overall publication readiness score, citation density analysis, self-citation ratio check, and the top 5 severity findings. For a quick sanity check before submission, that covers the most critical rejection triggers. The full 37-metric depth requires Pro.",
+  },
+  {
+    q: "What is included in the 37-metric analysis?",
+    a: "ANVIL covers eight dimensions: Structural Integrity (5 metrics — abstract, IMRAD, sections, flow, word count), Citation Quality (5 — density, self-citation ratio, recency, orphaned refs, missing refs), Theoretical Depth (5 — framework application, counter-arguments, grounding, positioning, conceptual clarity), Methodology and Rigour (5 — falsifiability, effect sizes, limitations, future work, reproducibility), S.M.I.L.E. Alignment (6 — RE/CE/CI/CX/CN/PW), Four Perspectives (4 — People/Systems/Planet/AI), AEST Temporal (4 — Absorb/Emulate/Simulate/Transcend), and Writing Quality (3 — clarity, APA 7th, anonymisation).",
+  },
+  {
+    q: "What is a decorative citation and why does it matter?",
+    a: "A decorative citation occurs when a theoretical framework (ANT, Structuration, Institutional Theory, etc.) is name-dropped to signal scholarly awareness but never operationalised analytically in the paper. Reviewers in information systems, STS, and management research flag this consistently as grounds for rejection. ANVIL scores framework application depth, not just citation presence.",
   },
   {
     q: "I submit 1-2 papers per year. Do I need Pro?",
-    a: "The free tier gives you the citation check for each submission. If you want the full 7-layer analysis including theoretical depth scoring, SMILE radar, falsifiability check, and the export PDF to share with co-authors, Pro at EUR 29/month is worthwhile for even a single paper — one revision cycle saved is worth far more.",
-  },
-  {
-    q: "Who needs the Enterprise plan?",
-    a: "Research offices, journal editors running pre-submission services, doctoral supervisors reviewing multiple student papers per month, and consultancies offering manuscript review services. The batch API lets you score 50+ papers programmatically and the custom rubric system supports different citation standards per target venue.",
+    a: "For one or two papers a year, you could use the free tier for a quick check and upgrade to Pro for a month when you are close to submission. At EUR 29 for a month, that is far cheaper than a rejection and revision cycle. Most researchers find Pro worth it for at least the submission month.",
   },
   {
     q: "Is my paper kept confidential?",
-    a: "Yes. PDFs are processed in-memory, never stored permanently. Pro users can opt into encrypted analysis history for version comparison. Enterprise can run on-premises or in a private cloud environment.",
+    a: "Yes. PDFs are processed in-memory and never stored permanently. ANVIL does not train on your data. Enterprise can run on-premises for maximum data sovereignty.",
   },
   {
-    q: "What citation styles does ANVIL support?",
-    a: "Full APA 7th edition compliance check on the free tier. Pro adds APA 6th, Chicago 17th, IEEE, Harvard, and Vancouver (medical). Enterprise adds custom citation style configuration for specific journals.",
+    q: "What citation styles does ANVIL check?",
+    a: "APA 7th edition is the default and most thoroughly tested. Venue-specific checks on Pro allow you to specify journal guidelines. MLA, Chicago, and IEEE support is in the roadmap.",
   },
   {
-    q: "Can ANVIL detect all decorative citations?",
-    a: "ANVIL detects decorative citations probabilistically: it checks whether framework-specific vocabulary appears in the analysis sections after citation, whether cited theories are mentioned in the coding or analysis language, and whether the theoretical contribution section makes claims that require the framework. It is not 100% accurate — use it as a first-pass flag, not a final verdict.",
+    q: "Can I use ANVIL for non-journal papers?",
+    a: "ANVIL works for conference papers, preprints, book chapters, and thesis chapters. The falsifiability and theoretical depth metrics are format-agnostic. Structural checks adapt to whether IMRAD is the expected format or not.",
   },
   {
-    q: "What if the analysis fails on my PDF?",
-    a: "If ANVIL cannot return results for a valid paper PDF, you get a full refund for that analysis month. No questions asked. For best results, ensure the PDF has a text layer (not a scanned image).",
-  },
-  {
-    q: "Does ANVIL work for conference papers?",
-    a: "Yes. ANVIL works for any academic manuscript: journal articles, conference papers, book chapters, and working papers. The anonymisation compliance check includes double-blind conference submission policies. Specify the target venue in the optional field for venue-specific checks.",
+    q: "Is ANVIL open source?",
+    a: "Yes. The ANVIL analysis engine is MIT-licensed. The commercial web app provides a hosted experience with tier-gated features, PDF reports, and API access.",
   },
 ];
 
 const COMPARISON_ROWS = [
-  { feature: "Papers per month", free: "1", pro: "Unlimited", enterprise: "Unlimited" },
-  { feature: "Citation integrity (Layer 1)", free: "Basic", pro: "Full APA 7th+", enterprise: "Full + custom style" },
-  { feature: "Theoretical depth (Layer 2)", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "SMILE radar (Layer 3)", free: "—", pro: "6 dimensions", enterprise: "6 + custom" },
-  { feature: "Falsifiability check (Layer 4)", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Four Perspectives (Layer 5)", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "AEST temporal (Layer 6)", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Anonymisation check (Layer 7)", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Quality findings shown", free: "Top 5", pro: "All", enterprise: "All" },
-  { feature: "Fix recommendations", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "PDF report export", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "JSON export", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Analysis history", free: "—", pro: "Included", enterprise: "Included" },
-  { feature: "API access", free: "—", pro: "—", enterprise: "500 calls/mo" },
-  { feature: "Batch scoring", free: "—", pro: "—", enterprise: "50+ papers" },
-  { feature: "Custom rubrics", free: "—", pro: "—", enterprise: "Per journal" },
-  { feature: "Team accounts", free: "—", pro: "—", enterprise: "Up to 25" },
-  { feature: "Support", free: "Community", pro: "Priority email", enterprise: "4h SLA" },
+  { feature: "Papers per month",                  free: "1",         pro: "Unlimited",      enterprise: "Unlimited" },
+  { feature: "Structural integrity (5 metrics)",  free: "Basic",     pro: "Full",           enterprise: "Full + custom" },
+  { feature: "Citation quality (5 metrics)",      free: "Basic",     pro: "Full",           enterprise: "Full" },
+  { feature: "Theoretical depth (5 metrics)",     free: "—",         pro: "Full",           enterprise: "Full" },
+  { feature: "Methodology rigour (5 metrics)",    free: "—",         pro: "Full",           enterprise: "Full" },
+  { feature: "S.M.I.L.E. radar (6 dimensions)",   free: "—",         pro: "Included",       enterprise: "Included + custom" },
+  { feature: "Four Perspectives analysis",        free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "AEST temporal depth",               free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "Top findings shown",                free: "Top 5",     pro: "All findings",   enterprise: "All findings" },
+  { feature: "Fix recommendations",               free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "Anonymisation compliance",          free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "Venue-specific checks",             free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "PDF report export",                 free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "JSON export",                       free: "—",         pro: "Included",       enterprise: "Included" },
+  { feature: "Batch mode",                        free: "—",         pro: "Included",       enterprise: "50+ papers" },
+  { feature: "API access",                        free: "—",         pro: "—",              enterprise: "500 calls/mo" },
+  { feature: "Team accounts",                     free: "—",         pro: "—",              enterprise: "Up to 25" },
+  { feature: "Custom rubrics",                    free: "—",         pro: "—",              enterprise: "Included" },
+  { feature: "Support",                           free: "Community", pro: "Priority email", enterprise: "4h SLA" },
 ];
 
 export default function PricingPage() {
@@ -119,7 +123,7 @@ export default function PricingPage() {
               href="/analyze"
               className="bg-amber-600 hover:bg-amber-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all"
             >
-              Try free
+              Score your paper free
             </Link>
           </div>
         </div>
@@ -132,13 +136,19 @@ export default function PricingPage() {
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-600/8 rounded-full blur-3xl" />
           </div>
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-sm font-medium mb-8">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
+              Transparent pricing — no reviewer surprises either
+            </div>
             <h1 className="text-5xl sm:text-6xl font-black text-white mb-4">
-              Start free.<br />Go deep with Pro.
+              Free to start.
+              <br />
+              <span className="gradient-text">Go deep with Pro.</span>
             </h1>
             <p className="text-slate-400 text-xl">
-              1 paper/month with basic citation check — free, no signup.
+              Basic citation check — free, no signup required.
               <br />
-              Unlock full 7-layer ANVIL analysis when you&apos;re ready.
+              Full 37-metric ANVIL analysis when you are ready.
             </p>
           </div>
         </section>
@@ -151,9 +161,9 @@ export default function PricingPage() {
                 tier="free"
                 name="Free"
                 price="Free"
-                description="Basic citation check for every paper. No signup, no credit card, no friction."
+                description="Score one paper per month. Catch the highest-severity citation and structural issues before submission."
                 features={FREE_FEATURES}
-                ctaLabel="Start scoring now"
+                ctaLabel="Start free — no signup"
                 ctaHref="/analyze"
               />
 
@@ -162,7 +172,7 @@ export default function PricingPage() {
                 name="Pro"
                 price="EUR 29"
                 annualPrice="EUR 23"
-                description="Unlimited papers with the full 7-layer ANVIL analysis for researchers who publish regularly."
+                description="Unlimited papers. Full 37-metric depth. SMILE radar, Perspectives, AEST, PDF export — everything."
                 features={PRO_FEATURES}
                 ctaLabel="Start Pro"
                 ctaHref="/checkout/pro"
@@ -174,9 +184,9 @@ export default function PricingPage() {
                 tier="enterprise"
                 name="Enterprise"
                 price="EUR 149"
-                description="API, batch scoring, and custom rubrics for research offices and consultancies."
+                description="API access, team accounts, custom rubrics, and institutional dashboards for research offices."
                 features={ENTERPRISE_FEATURES}
-                ctaLabel="Contact sales"
+                ctaLabel="Contact us"
                 ctaHref="mailto:hello@winniio.io?subject=ANVIL Enterprise"
                 badge="Teams"
               />
@@ -184,20 +194,25 @@ export default function PricingPage() {
 
             {/* Value callout */}
             <div className="mt-8 glass rounded-2xl p-6 border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg" aria-hidden="true">
-                  &lt;
+              <div className="flex items-center gap-4">
+                <div
+                  className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-lg shrink-0"
+                  aria-hidden="true"
+                >
+                  A
                 </div>
                 <div>
-                  <p className="text-white font-semibold">One revision cycle costs weeks of time</p>
-                  <p className="text-slate-400 text-sm">ANVIL catches the issues reviewers flag — in 60 seconds, before submission.</p>
+                  <p className="text-white font-semibold">A peer-review rejection costs weeks of revision</p>
+                  <p className="text-slate-400 text-sm">
+                    ANVIL finds the same patterns in 60 seconds. Run it before submission, not after rejection.
+                  </p>
                 </div>
               </div>
               <Link
                 href="/analyze"
                 className="shrink-0 bg-amber-600 hover:bg-amber-500 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all duration-200"
               >
-                Try it free first
+                Try free first
               </Link>
             </div>
           </div>
@@ -205,8 +220,8 @@ export default function PricingPage() {
 
         {/* Comparison table */}
         <section className="py-24 border-t border-slate-800/60">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-black text-white text-center mb-12">Full comparison</h2>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-black text-white text-center mb-12">Full feature comparison</h2>
 
             <div className="glass rounded-2xl border border-slate-700/50 overflow-x-auto">
               <div className="grid grid-cols-4 min-w-[600px] border-b border-slate-700/50">
@@ -237,14 +252,14 @@ export default function PricingPage() {
                     {row.pro === "—" ? (
                       <span className="text-slate-700" aria-label="Not included">—</span>
                     ) : (
-                      <span className="text-amber-200 font-medium">{row.pro}</span>
+                      <span className="text-amber-300 font-medium">{row.pro}</span>
                     )}
                   </div>
                   <div className="p-4 text-center text-slate-300 text-sm border-l border-slate-800/60">
                     {row.enterprise === "—" ? (
                       <span className="text-slate-700" aria-label="Not included">—</span>
                     ) : (
-                      <span className="text-amber-300 font-medium">{row.enterprise}</span>
+                      <span className="text-amber-200 font-medium">{row.enterprise}</span>
                     )}
                   </div>
                 </div>
@@ -288,7 +303,7 @@ export default function PricingPage() {
             <div className="mt-12 text-center glass rounded-2xl p-8 border border-amber-500/20">
               <p className="text-white font-bold text-lg mb-2">Still have questions?</p>
               <p className="text-slate-400 text-sm mb-6">
-                We answer within 24 hours. For enterprise demos, book a call.
+                We respond within 24 hours. For institutional demos, book a call.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
@@ -314,20 +329,21 @@ export default function PricingPage() {
         <section className="py-24 border-t border-slate-800/60 text-center">
           <div className="max-w-2xl mx-auto px-4 sm:px-6">
             <h2 className="text-4xl font-black text-white mb-4">
-              Your next paper deserves a better shot
+              Your paper deserves a fair shot
             </h2>
             <p className="text-slate-400 text-lg mb-8">
-              Free. No signup. Upload your PDF and see what reviewers will flag — in 60 seconds.
+              Free. No signup. Upload your PDF and see what reviewers will flag — in under 60 seconds.
             </p>
             <Link
               href="/analyze"
               className="inline-flex items-center gap-3 bg-amber-600 hover:bg-amber-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105"
             >
-              Try ANVIL free
+              Run it through the ANVIL
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
+            <p className="text-slate-600 text-sm mt-3">No signup required · PDF stays private · 1 free paper/month</p>
           </div>
         </section>
       </main>

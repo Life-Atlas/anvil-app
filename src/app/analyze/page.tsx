@@ -13,15 +13,17 @@ import type { AnvilAnalysisResult } from "@/lib/mockAnalysis";
 type AnalysisStep = "idle" | "uploading" | "analyzing" | "done" | "error";
 
 const ANALYSIS_STEPS = [
-  { id: "upload", label: "Uploading paper", icon: "↑" },
-  { id: "citation", label: "Layer 1: Citation Integrity", icon: "◻" },
-  { id: "theory", label: "Layer 2: Theoretical Depth", icon: "⟷" },
-  { id: "smile", label: "Layer 3: S.M.I.L.E. Alignment", icon: "◉" },
-  { id: "falsify", label: "Layer 4: Falsifiability Check", icon: "⚠" },
-  { id: "perspectives", label: "Layer 5: Four Perspectives", icon: "△" },
-  { id: "aest", label: "Layer 6: AEST Temporal", icon: "⧗" },
-  { id: "anon", label: "Layer 7: Anonymisation & Compliance", icon: "⬡" },
-  { id: "report", label: "Generating report", icon: "⟳" },
+  { id: "upload",       label: "Uploading paper",                 icon: "↑" },
+  { id: "structure",    label: "Step 1: Structural Integrity",     icon: "◻" },
+  { id: "citation",     label: "Step 2: Citation Quality",         icon: "◈" },
+  { id: "theory",       label: "Step 3: Theoretical Depth",        icon: "⟷" },
+  { id: "methodology",  label: "Step 4: Methodology and Rigour",   icon: "⚗" },
+  { id: "smile",        label: "Step 5: S.M.I.L.E. Alignment",    icon: "◉" },
+  { id: "perspectives", label: "Step 6: Four Perspectives",        icon: "△" },
+  { id: "aest",         label: "Step 7: AEST Temporal",            icon: "⧗" },
+  { id: "writing",      label: "Step 8: Writing Quality",          icon: "✎" },
+  { id: "crossref",     label: "Step 9: Cross-reference Check",    icon: "⬡" },
+  { id: "report",       label: "Step 10: Generating report",       icon: "⟳" },
 ];
 
 function AnalysisProgress({ currentStep }: { currentStep: number }) {
@@ -32,7 +34,7 @@ function AnalysisProgress({ currentStep }: { currentStep: number }) {
         <h2 className="text-white font-bold text-xl">Running paper through ANVIL...</h2>
       </div>
 
-      <div className="space-y-4" role="list" aria-label="Analysis progress">
+      <div className="space-y-3" role="list" aria-label="Analysis progress">
         {ANALYSIS_STEPS.map((step, i) => {
           const isDone = i < currentStep;
           const isActive = i === currentStep;
@@ -46,7 +48,7 @@ function AnalysisProgress({ currentStep }: { currentStep: number }) {
               aria-label={`${step.label}: ${isDone ? "complete" : isActive ? "in progress" : "pending"}`}
             >
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 transition-all duration-300 ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center text-xs shrink-0 transition-all duration-300 ${
                   isDone
                     ? "bg-emerald-500/20 border border-emerald-500/40 text-emerald-400"
                     : isActive
@@ -100,13 +102,23 @@ function ScoreGauge({ score }: { score: number }) {
   const color =
     score >= 70 ? "text-emerald-400" : score >= 50 ? "text-amber-400" : "text-red-400";
   const label =
-    score >= 70 ? "Publishable with minor revisions" : score >= 50 ? "Major revisions required" : "Significant rework needed";
+    score >= 70
+      ? "Publishable with minor revisions"
+      : score >= 50
+      ? "Major revisions required"
+      : "Significant rework needed";
   const badgeBg =
-    score >= 70 ? "bg-emerald-500/10 border-emerald-500/20" : score >= 50 ? "bg-amber-500/10 border-amber-500/20" : "bg-red-500/10 border-red-500/20";
+    score >= 70
+      ? "bg-emerald-500/10 border-emerald-500/20"
+      : score >= 50
+      ? "bg-amber-500/10 border-amber-500/20"
+      : "bg-red-500/10 border-red-500/20";
 
   return (
     <div className="glass rounded-2xl p-8 border border-amber-500/20 text-center">
-      <p className="text-slate-400 text-sm font-medium uppercase tracking-widest mb-4">Overall Publication Readiness</p>
+      <p className="text-slate-400 text-sm font-medium uppercase tracking-widest mb-4">
+        Overall Publication Readiness
+      </p>
       <div className={`text-7xl font-black mb-2 ${color}`}>{score}</div>
       <div className="text-slate-500 text-sm mb-4">out of 100</div>
       <span className={`inline-block px-4 py-1.5 rounded-full border text-sm font-semibold ${badgeBg} ${color}`}>
@@ -134,16 +146,28 @@ function LayerSummary({ layers }: { layers: AnvilAnalysisResult["layers"] }) {
     color: string;
   }> = [
     {
-      name: "Citation Integrity",
+      name: "Structural Integrity",
       score: layers.structural.score,
       label: layers.structural.label,
       color: "amber",
     },
     {
+      name: "Citation Quality",
+      score: layers.citations.score,
+      label: layers.citations.label,
+      color: "amber",
+    },
+    {
       name: "Theoretical Depth",
-      score: layers.callAlignment.score,
-      label: layers.callAlignment.label,
+      score: layers.theory.score,
+      label: layers.theory.label,
       color: "purple",
+    },
+    {
+      name: "Methodology Rigour",
+      score: layers.methodology.score,
+      label: layers.methodology.label,
+      color: "amber",
     },
     {
       name: "S.M.I.L.E. Alignment",
@@ -170,16 +194,10 @@ function LayerSummary({ layers }: { layers: AnvilAnalysisResult["layers"] }) {
       label: layers.aest.label,
       color: "cyan",
     },
-    {
-      name: "Anonymisation",
-      score: layers.antReality.score,
-      label: layers.antReality.label,
-      color: "violet",
-    },
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {items.map((item) => {
         const colors = LAYER_COLOR_CLASSES[item.color] ?? LAYER_COLOR_CLASSES["amber"];
         return (
@@ -195,7 +213,9 @@ function LayerSummary({ layers }: { layers: AnvilAnalysisResult["layers"] }) {
             ) : (
               <p className="text-2xl font-black text-red-400 mb-1">{item.label}</p>
             )}
-            <p className="text-slate-400 text-xs">{item.score !== null ? item.label : item.sub}</p>
+            <p className="text-slate-400 text-xs">
+              {item.score !== null ? item.label : item.sub}
+            </p>
           </div>
         );
       })}
@@ -211,7 +231,9 @@ export default function AnalyzePage() {
   const [analysisStep, setAnalysisStep] = useState(0);
   const [result, setResult] = useState<AnvilAnalysisResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<"overview" | "findings" | "smile" | "report">("overview");
+  const [activeTab, setActiveTab] = useState<"overview" | "findings" | "smile" | "report">(
+    "overview"
+  );
 
   const handleFileSelect = useCallback((f: File) => {
     setFile(f);
@@ -237,7 +259,7 @@ export default function AnalyzePage() {
       if (currentStep >= ANALYSIS_STEPS.length - 1) {
         clearInterval(ticker);
       }
-    }, 400);
+    }, 350);
 
     setStep("analyzing");
 
@@ -316,7 +338,8 @@ export default function AnalyzePage() {
                 Score your research paper
               </h1>
               <p className="text-slate-400 text-lg">
-                Upload your paper (PDF or Markdown) and get citation analysis, theoretical depth scoring, and SMILE alignment in under 60 seconds.
+                Upload your paper (PDF) and get citation quality, theoretical depth scoring, and
+                SMILE alignment across 37 metrics in under 60 seconds.
               </p>
             </div>
 
@@ -328,8 +351,11 @@ export default function AnalyzePage() {
               <div>
                 <p className="text-amber-300 font-semibold text-sm">Free tier — 1 paper/month</p>
                 <p className="text-slate-400 text-sm mt-0.5">
-                  You get a basic citation check and top 5 findings. Full 7-layer ANVIL analysis, SMILE radar, and export require{" "}
-                  <Link href="/pricing" className="text-amber-400 underline underline-offset-2">Pro (EUR 29/month)</Link>.
+                  You get a basic citation check and top 5 findings. Full 37-metric ANVIL analysis,
+                  SMILE radar, and export require{" "}
+                  <Link href="/pricing" className="text-amber-400 underline underline-offset-2">
+                    Pro (EUR 29/month)
+                  </Link>.
                 </p>
               </div>
             </div>
@@ -338,7 +364,8 @@ export default function AnalyzePage() {
               {/* Upload zone */}
               <div>
                 <label className="text-white font-semibold text-sm block mb-3">
-                  Research paper PDF or Markdown <span className="text-red-400" aria-label="required">*</span>
+                  Research paper PDF{" "}
+                  <span className="text-red-400" aria-label="required">*</span>
                 </label>
                 <UploadZone onFileSelect={handleFileSelect} />
               </div>
@@ -347,10 +374,11 @@ export default function AnalyzePage() {
               <div>
                 <label htmlFor="venue-text" className="text-white font-semibold text-sm block mb-1">
                   Target journal or conference{" "}
-                  <span className="text-slate-500 font-normal">(optional, enables venue-specific checks)</span>
+                  <span className="text-slate-500 font-normal">(optional — enables venue-specific checks)</span>
                 </label>
                 <p className="text-slate-500 text-xs mb-3">
-                  Paste the journal name, scope statement, or author guidelines. Enables citation style verification and double-blind compliance checks.
+                  Paste the journal name, scope statement, or author guidelines. Enables citation
+                  style verification and double-blind compliance checks.
                 </p>
                 <textarea
                   id="venue-text"
@@ -363,7 +391,10 @@ export default function AnalyzePage() {
               </div>
 
               {errorMsg && (
-                <div className="glass rounded-xl p-4 border border-red-500/30 flex items-start gap-3" role="alert">
+                <div
+                  className="glass rounded-xl p-4 border border-red-500/30 flex items-start gap-3"
+                  role="alert"
+                >
                   <svg className="w-5 h-5 text-red-400 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -402,7 +433,12 @@ export default function AnalyzePage() {
               <div>
                 <h1 className="text-2xl sm:text-3xl font-black text-white">{result.proposalTitle}</h1>
                 <p className="text-slate-400 text-sm mt-1">
-                  Analyzed {new Date(result.analyzedAt).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}
+                  Analyzed{" "}
+                  {new Date(result.analyzedAt).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
                   {" · "}
                   <span className="capitalize">{result.tier} tier</span>
                 </p>
@@ -439,10 +475,10 @@ export default function AnalyzePage() {
             {/* Tab nav */}
             <div className="flex items-center gap-1 border-b border-slate-800 mb-8 overflow-x-auto">
               {[
-                { id: "overview" as const, label: "Overview" },
-                { id: "findings" as const, label: `Findings (${result.findings.length})` },
-                { id: "smile" as const, label: "S.M.I.L.E. Radar", locked: result.tier === "free" },
-                { id: "report" as const, label: "Export", locked: result.tier === "free" },
+                { id: "overview" as const,  label: "Overview" },
+                { id: "findings" as const,  label: `Findings (${result.findings.length})` },
+                { id: "smile" as const,     label: "S.M.I.L.E. Radar", locked: result.tier === "free" },
+                { id: "report" as const,    label: "Export",            locked: result.tier === "free" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -460,7 +496,9 @@ export default function AnalyzePage() {
                 >
                   {tab.label}
                   {tab.locked && (
-                    <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-xs font-bold">Pro</span>
+                    <span className="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-400 text-xs font-bold">
+                      Pro
+                    </span>
                   )}
                 </button>
               ))}
@@ -474,16 +512,43 @@ export default function AnalyzePage() {
                   <div className="grid sm:grid-cols-2 gap-4">
                     {result.tier !== "free" ? (
                       <>
-                        <ScoreCard label="Citation Quality" score={result.scores.citation_quality} description="APA 7th compliance, citation density, self-citation ratio" color="amber" delay={0} />
-                        <ScoreCard label="Theoretical Depth" score={result.scores.theoretical_depth} description="Frameworks applied analytically, not decoratively" color="green" delay={100} />
-                        <ScoreCard label="Methodology Rigour" score={result.scores.methodology_rigour} description="Falsifiability, effect sizes, limitations adequacy" color="amber" delay={200} />
-                        <ScoreCard label="Domain Relevance" score={result.scores.domain_relevance} description="Contribution fits the target research community" color="blue" delay={300} />
+                        <ScoreCard
+                          label="Citation Quality"
+                          score={result.scores.citation_quality}
+                          description="Density, self-citation ratio, recency, APA 7th compliance"
+                          color="amber"
+                          delay={0}
+                        />
+                        <ScoreCard
+                          label="Theoretical Depth"
+                          score={result.scores.theoretical_depth}
+                          description="Frameworks applied analytically, counter-arguments engaged"
+                          color="green"
+                          delay={100}
+                        />
+                        <ScoreCard
+                          label="Methodology Rigour"
+                          score={result.scores.methodology_rigour}
+                          description="Falsifiability, effect sizes, limitations, reproducibility"
+                          color="amber"
+                          delay={200}
+                        />
+                        <ScoreCard
+                          label="Domain Relevance"
+                          score={result.scores.domain_relevance}
+                          description="Contribution fits the target research community"
+                          color="blue"
+                          delay={300}
+                        />
                       </>
                     ) : (
                       <div className="sm:col-span-2 glass rounded-2xl p-8 border border-amber-500/20 text-center">
-                        <p className="text-amber-400 font-bold text-lg mb-2">Full score breakdown requires Pro</p>
+                        <p className="text-amber-400 font-bold text-lg mb-2">
+                          Full score breakdown requires Pro
+                        </p>
                         <p className="text-slate-400 text-sm mb-4">
-                          Citation Quality, Theoretical Depth, Methodology Rigour, and Domain Relevance scores are available on Pro and Enterprise plans.
+                          Citation Quality, Theoretical Depth, Methodology Rigour, and all 37 ANVIL
+                          metrics are available on Pro and Enterprise plans.
                         </p>
                         <Link
                           href="/pricing"
@@ -498,7 +563,9 @@ export default function AnalyzePage() {
 
                 <section className="grid md:grid-cols-2 gap-6">
                   <div className="glass rounded-2xl p-6 border border-emerald-500/20">
-                    <h2 className="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-4">Top Strengths</h2>
+                    <h2 className="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-4">
+                      Top Strengths
+                    </h2>
                     <ul className="space-y-3" role="list">
                       {result.topStrengths.map((s, i) => (
                         <li key={i} className="flex items-start gap-3">
@@ -510,7 +577,9 @@ export default function AnalyzePage() {
                   </div>
 
                   <div className="glass rounded-2xl p-6 border border-red-500/20">
-                    <h2 className="text-red-400 font-bold text-sm uppercase tracking-widest mb-4">Top Weaknesses</h2>
+                    <h2 className="text-red-400 font-bold text-sm uppercase tracking-widest mb-4">
+                      Top Weaknesses
+                    </h2>
                     <ul className="space-y-3" role="list">
                       {result.topWeaknesses.map((w, i) => (
                         <li key={i} className="flex items-start gap-3">
@@ -530,7 +599,9 @@ export default function AnalyzePage() {
                   <h2 className="text-white font-bold text-lg">
                     {result.findings.length} findings
                     {result.tier === "free" && (
-                      <span className="ml-2 text-amber-400 text-sm font-normal">(showing top 5 on free tier)</span>
+                      <span className="ml-2 text-amber-400 text-sm font-normal">
+                        (showing top 5 on free tier)
+                      </span>
                     )}
                   </h2>
                 </div>
@@ -561,13 +632,16 @@ export default function AnalyzePage() {
                     },
                     {
                       title: "JSON Export",
-                      desc: "Machine-readable analysis data. Connect to your own tooling or the ANVIL API.",
+                      desc: "Machine-readable analysis data across all 37 metrics. Connect to your own tooling or the ANVIL API.",
                       icon: "{ }",
                       label: "Download JSON",
                       color: "purple",
                     },
                   ].map((item) => (
-                    <div key={item.title} className="glass rounded-2xl p-8 border border-slate-700/50 text-center">
+                    <div
+                      key={item.title}
+                      className="glass rounded-2xl p-8 border border-slate-700/50 text-center"
+                    >
                       <div className="text-4xl mb-4" aria-hidden="true">{item.icon}</div>
                       <h3 className="text-white font-bold text-lg mb-2">{item.title}</h3>
                       <p className="text-slate-400 text-sm mb-6">{item.desc}</p>
@@ -579,7 +653,10 @@ export default function AnalyzePage() {
                         }`}
                         onClick={() => {
                           if (item.title === "JSON Export") {
-                            const blob = new Blob([JSON.stringify(result, null, 2)], { type: "application/json" });
+                            const blob = new Blob(
+                              [JSON.stringify(result, null, 2)],
+                              { type: "application/json" }
+                            );
                             const url = URL.createObjectURL(blob);
                             const a = document.createElement("a");
                             a.href = url;
