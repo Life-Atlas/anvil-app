@@ -8,28 +8,28 @@ import SmileRadar from "@/components/SmileRadar";
 import PerspectivesRadar from "@/components/PerspectivesRadar";
 import AestBar from "@/components/AestBar";
 import FindingsList from "@/components/FindingsList";
-import type { CrucibleAnalysisResult } from "@/lib/mockAnalysis";
+import type { AnvilAnalysisResult } from "@/lib/mockAnalysis";
 
 type AnalysisStep = "idle" | "uploading" | "analyzing" | "done" | "error";
 
 const ANALYSIS_STEPS = [
-  { id: "upload", label: "Uploading PDF", icon: "↑" },
-  { id: "structure", label: "Layer 1: Structural Integrity", icon: "◻" },
-  { id: "alignment", label: "Layer 2: Call Alignment", icon: "⟷" },
-  { id: "smile", label: "Layer 3: S.M.I.L.E. Field Analysis", icon: "◉" },
-  { id: "patterns", label: "Layer 4: Anti-Pattern Detection", icon: "⚠" },
-  { id: "perspectives", label: "Layer 5: Three Perspectives Analysis", icon: "△" },
-  { id: "aest", label: "Layer 6: AEST Temporal Analysis", icon: "⧗" },
-  { id: "ant", label: "Layer 7: Reality-as-Actor Analysis", icon: "⬡" },
+  { id: "upload", label: "Uploading paper", icon: "↑" },
+  { id: "citation", label: "Layer 1: Citation Integrity", icon: "◻" },
+  { id: "theory", label: "Layer 2: Theoretical Depth", icon: "⟷" },
+  { id: "smile", label: "Layer 3: S.M.I.L.E. Alignment", icon: "◉" },
+  { id: "falsify", label: "Layer 4: Falsifiability Check", icon: "⚠" },
+  { id: "perspectives", label: "Layer 5: Four Perspectives", icon: "△" },
+  { id: "aest", label: "Layer 6: AEST Temporal", icon: "⧗" },
+  { id: "anon", label: "Layer 7: Anonymisation & Compliance", icon: "⬡" },
   { id: "report", label: "Generating report", icon: "⟳" },
 ];
 
 function AnalysisProgress({ currentStep }: { currentStep: number }) {
   return (
-    <div className="glass rounded-2xl p-8 border border-blue-500/20 max-w-lg mx-auto">
+    <div className="glass rounded-2xl p-8 border border-amber-500/20 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-8">
-        <div className="w-8 h-8 rounded-full border-2 border-blue-500 border-t-transparent animate-spin" aria-hidden="true" />
-        <h2 className="text-white font-bold text-xl">Analyzing your proposal...</h2>
+        <div className="w-8 h-8 rounded-full border-2 border-amber-500 border-t-transparent animate-spin" aria-hidden="true" />
+        <h2 className="text-white font-bold text-xl">Running paper through ANVIL...</h2>
       </div>
 
       <div className="space-y-4" role="list" aria-label="Analysis progress">
@@ -50,7 +50,7 @@ function AnalysisProgress({ currentStep }: { currentStep: number }) {
                   isDone
                     ? "bg-emerald-500/20 border border-emerald-500/40 text-emerald-400"
                     : isActive
-                    ? "bg-blue-500/20 border border-blue-500/40 text-blue-400"
+                    ? "bg-amber-500/20 border border-amber-500/40 text-amber-400"
                     : "bg-slate-800 border border-slate-700 text-slate-600"
                 }`}
                 aria-hidden="true"
@@ -71,7 +71,7 @@ function AnalysisProgress({ currentStep }: { currentStep: number }) {
                   {[0, 1, 2].map((d) => (
                     <span
                       key={d}
-                      className="w-1 h-1 rounded-full bg-blue-400 animate-bounce"
+                      className="w-1 h-1 rounded-full bg-amber-400 animate-bounce"
                       style={{ animationDelay: `${d * 0.15}s` }}
                     />
                   ))}
@@ -84,7 +84,7 @@ function AnalysisProgress({ currentStep }: { currentStep: number }) {
 
       <div className="mt-6 h-1.5 bg-slate-800 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full transition-all duration-700"
+          className="h-full bg-gradient-to-r from-amber-600 to-amber-400 rounded-full transition-all duration-700"
           style={{ width: `${Math.round((currentStep / (ANALYSIS_STEPS.length - 1)) * 100)}%` }}
           role="progressbar"
           aria-valuenow={Math.round((currentStep / (ANALYSIS_STEPS.length - 1)) * 100)}
@@ -100,13 +100,13 @@ function ScoreGauge({ score }: { score: number }) {
   const color =
     score >= 70 ? "text-emerald-400" : score >= 50 ? "text-amber-400" : "text-red-400";
   const label =
-    score >= 70 ? "Fundable with revisions" : score >= 50 ? "Below threshold — work needed" : "High risk of rejection";
+    score >= 70 ? "Publishable with minor revisions" : score >= 50 ? "Major revisions required" : "Significant rework needed";
   const badgeBg =
     score >= 70 ? "bg-emerald-500/10 border-emerald-500/20" : score >= 50 ? "bg-amber-500/10 border-amber-500/20" : "bg-red-500/10 border-red-500/20";
 
   return (
-    <div className="glass rounded-2xl p-8 border border-blue-500/20 text-center">
-      <p className="text-slate-400 text-sm font-medium uppercase tracking-widest mb-4">Overall Funding Readiness</p>
+    <div className="glass rounded-2xl p-8 border border-amber-500/20 text-center">
+      <p className="text-slate-400 text-sm font-medium uppercase tracking-widest mb-4">Overall Publication Readiness</p>
       <div className={`text-7xl font-black mb-2 ${color}`}>{score}</div>
       <div className="text-slate-500 text-sm mb-4">out of 100</div>
       <span className={`inline-block px-4 py-1.5 rounded-full border text-sm font-semibold ${badgeBg} ${color}`}>
@@ -117,16 +117,15 @@ function ScoreGauge({ score }: { score: number }) {
 }
 
 const LAYER_COLOR_CLASSES: Record<string, { border: string; text: string }> = {
-  blue:    { border: "border-blue-500/20",    text: "text-blue-400" },
-  purple:  { border: "border-purple-500/20",  text: "text-purple-400" },
   amber:   { border: "border-amber-500/20",   text: "text-amber-400" },
+  purple:  { border: "border-purple-500/20",  text: "text-purple-400" },
   red:     { border: "border-red-500/20",     text: "text-red-400" },
   emerald: { border: "border-emerald-500/20", text: "text-emerald-400" },
   cyan:    { border: "border-cyan-500/20",    text: "text-cyan-400" },
   violet:  { border: "border-violet-500/20",  text: "text-violet-400" },
 };
 
-function LayerSummary({ layers }: { layers: CrucibleAnalysisResult["layers"] }) {
+function LayerSummary({ layers }: { layers: AnvilAnalysisResult["layers"] }) {
   const items: Array<{
     name: string;
     score: number | null;
@@ -135,32 +134,32 @@ function LayerSummary({ layers }: { layers: CrucibleAnalysisResult["layers"] }) 
     color: string;
   }> = [
     {
-      name: "Structural Integrity",
+      name: "Citation Integrity",
       score: layers.structural.score,
       label: layers.structural.label,
-      color: "blue",
+      color: "amber",
     },
     {
-      name: "Call Alignment",
+      name: "Theoretical Depth",
       score: layers.callAlignment.score,
       label: layers.callAlignment.label,
       color: "purple",
     },
     {
-      name: "S.M.I.L.E. Field",
+      name: "S.M.I.L.E. Alignment",
       score: layers.smile.score,
       label: layers.smile.label,
       color: "amber",
     },
     {
-      name: "Anti-Patterns",
+      name: "Quality Issues",
       score: null,
       label: `${layers.antiPatterns.count} found`,
       sub: `${layers.antiPatterns.critical} critical · ${layers.antiPatterns.major} major`,
       color: "red",
     },
     {
-      name: "Perspectives",
+      name: "Four Perspectives",
       score: layers.perspectives.score,
       label: layers.perspectives.label,
       color: "emerald",
@@ -172,7 +171,7 @@ function LayerSummary({ layers }: { layers: CrucibleAnalysisResult["layers"] }) 
       color: "cyan",
     },
     {
-      name: "Reality-as-Actor",
+      name: "Anonymisation",
       score: layers.antReality.score,
       label: layers.antReality.label,
       color: "violet",
@@ -182,7 +181,7 @@ function LayerSummary({ layers }: { layers: CrucibleAnalysisResult["layers"] }) 
   return (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {items.map((item) => {
-        const colors = LAYER_COLOR_CLASSES[item.color] ?? LAYER_COLOR_CLASSES["blue"];
+        const colors = LAYER_COLOR_CLASSES[item.color] ?? LAYER_COLOR_CLASSES["amber"];
         return (
           <div
             key={item.name}
@@ -206,11 +205,11 @@ function LayerSummary({ layers }: { layers: CrucibleAnalysisResult["layers"] }) 
 
 export default function AnalyzePage() {
   const [file, setFile] = useState<File | null>(null);
-  const [callText, setCallText] = useState("");
+  const [venueText, setVenueText] = useState("");
   const [tier] = useState<"free" | "pro" | "enterprise">("free");
   const [step, setStep] = useState<AnalysisStep>("idle");
   const [analysisStep, setAnalysisStep] = useState(0);
-  const [result, setResult] = useState<CrucibleAnalysisResult | null>(null);
+  const [result, setResult] = useState<AnvilAnalysisResult | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"overview" | "findings" | "smile" | "report">("overview");
 
@@ -228,10 +227,9 @@ export default function AnalyzePage() {
 
     const formData = new FormData();
     formData.append("pdf", file);
-    formData.append("callText", callText);
+    formData.append("venueText", venueText);
     formData.append("tier", tier);
 
-    // Simulate progressive step animation
     let currentStep = 0;
     const ticker = setInterval(() => {
       currentStep += 1;
@@ -258,7 +256,6 @@ export default function AnalyzePage() {
         return;
       }
 
-      // Wait for animation to finish
       await new Promise((r) => setTimeout(r, 600));
       clearInterval(ticker);
       setAnalysisStep(ANALYSIS_STEPS.length - 1);
@@ -267,7 +264,7 @@ export default function AnalyzePage() {
       setResult(json.data);
       setStep("done");
       setActiveTab("overview");
-    } catch (err) {
+    } catch {
       clearInterval(ticker);
       setStep("error");
       setErrorMsg("Network error. Please check your connection and try again.");
@@ -276,7 +273,7 @@ export default function AnalyzePage() {
 
   const reset = () => {
     setFile(null);
-    setCallText("");
+    setVenueText("");
     setResult(null);
     setStep("idle");
     setErrorMsg(null);
@@ -289,10 +286,10 @@ export default function AnalyzePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                <span className="text-white font-black text-sm">C</span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
+                <span className="text-white font-black text-sm">A</span>
               </div>
-              <span className="text-white font-bold text-lg tracking-tight">CRUCIBLE</span>
+              <span className="text-white font-bold text-lg tracking-tight">ANVIL</span>
             </Link>
             <div className="flex items-center gap-4">
               <span className="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-slate-400 text-xs font-medium">
@@ -316,10 +313,10 @@ export default function AnalyzePage() {
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-10">
               <h1 className="text-4xl sm:text-5xl font-black text-white mb-3">
-                Analyze your proposal
+                Score your research paper
               </h1>
               <p className="text-slate-400 text-lg">
-                Upload your Horizon Europe PDF and get a scored report in under 60 seconds.
+                Upload your paper (PDF or Markdown) and get citation analysis, theoretical depth scoring, and SMILE alignment in under 60 seconds.
               </p>
             </div>
 
@@ -329,10 +326,10 @@ export default function AnalyzePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <div>
-                <p className="text-amber-300 font-semibold text-sm">Free tier</p>
+                <p className="text-amber-300 font-semibold text-sm">Free tier — 1 paper/month</p>
                 <p className="text-slate-400 text-sm mt-0.5">
-                  You get Layer 4 anti-pattern scan and top 5 findings. Full 4-layer analysis, SMILE radar, and call alignment scoring require{" "}
-                  <Link href="/pricing" className="text-amber-400 underline underline-offset-2">Pro (EUR 49/month)</Link>.
+                  You get a basic citation check and top 5 findings. Full 7-layer ANVIL analysis, SMILE radar, and export require{" "}
+                  <Link href="/pricing" className="text-amber-400 underline underline-offset-2">Pro (EUR 29/month)</Link>.
                 </p>
               </div>
             </div>
@@ -341,27 +338,27 @@ export default function AnalyzePage() {
               {/* Upload zone */}
               <div>
                 <label className="text-white font-semibold text-sm block mb-3">
-                  Proposal PDF <span className="text-red-400" aria-label="required">*</span>
+                  Research paper PDF or Markdown <span className="text-red-400" aria-label="required">*</span>
                 </label>
                 <UploadZone onFileSelect={handleFileSelect} />
               </div>
 
-              {/* Call text */}
+              {/* Venue text */}
               <div>
-                <label htmlFor="call-text" className="text-white font-semibold text-sm block mb-1">
-                  Call topic text{" "}
-                  <span className="text-slate-500 font-normal">(optional, enables call alignment scoring)</span>
+                <label htmlFor="venue-text" className="text-white font-semibold text-sm block mb-1">
+                  Target journal or conference{" "}
+                  <span className="text-slate-500 font-normal">(optional, enables venue-specific checks)</span>
                 </label>
                 <p className="text-slate-500 text-xs mb-3">
-                  Paste the call identifier, title, and expected outcomes from the EU Funding and Tenders portal.
+                  Paste the journal name, scope statement, or author guidelines. Enables citation style verification and double-blind compliance checks.
                 </p>
                 <textarea
-                  id="call-text"
-                  value={callText}
-                  onChange={(e) => setCallText(e.target.value)}
-                  placeholder="e.g. HORIZON-CL4-2025-RESILIENCE-01-07 — Digital Twins for Climate-Resilient Infrastructure. Expected outcomes: ..."
-                  rows={5}
-                  className="w-full bg-slate-800/60 border border-slate-700 focus:border-blue-500 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 text-sm resize-none outline-none transition-colors focus:ring-2 focus:ring-blue-500/20"
+                  id="venue-text"
+                  value={venueText}
+                  onChange={(e) => setVenueText(e.target.value)}
+                  placeholder="e.g. Journal of Information Systems — APA 7th, double-blind review, max 8000 words, FAIR data statement required..."
+                  rows={4}
+                  className="w-full bg-slate-800/60 border border-slate-700 focus:border-amber-500 rounded-xl px-4 py-3 text-white placeholder:text-slate-600 text-sm resize-none outline-none transition-colors focus:ring-2 focus:ring-amber-500/20"
                 />
               </div>
 
@@ -377,14 +374,14 @@ export default function AnalyzePage() {
               <button
                 onClick={runAnalysis}
                 disabled={!file}
-                className="w-full bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-blue-500/25 disabled:opacity-50"
+                className="w-full bg-amber-600 hover:bg-amber-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-amber-500/25 disabled:opacity-50"
                 aria-disabled={!file}
               >
-                {file ? `Analyze "${file.name}"` : "Upload a PDF first"}
+                {file ? `Run ANVIL on "${file.name}"` : "Upload a paper first"}
               </button>
 
               <p className="text-center text-slate-600 text-xs">
-                Your PDF is processed securely and never stored permanently.
+                Your paper is processed securely and never stored permanently.
               </p>
             </div>
           </div>
@@ -413,7 +410,7 @@ export default function AnalyzePage() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={reset}
-                  className="glass border border-slate-700 hover:border-blue-500/40 text-slate-300 hover:text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
+                  className="glass border border-slate-700 hover:border-amber-500/40 text-slate-300 hover:text-white text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
                 >
                   New analysis
                 </button>
@@ -452,7 +449,7 @@ export default function AnalyzePage() {
                   onClick={() => !tab.locked && setActiveTab(tab.id)}
                   className={`flex items-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap border-b-2 transition-all duration-200 ${
                     activeTab === tab.id
-                      ? "border-blue-500 text-blue-400"
+                      ? "border-amber-500 text-amber-400"
                       : tab.locked
                       ? "border-transparent text-slate-600 cursor-default"
                       : "border-transparent text-slate-400 hover:text-white"
@@ -472,35 +469,33 @@ export default function AnalyzePage() {
             {/* Tab content */}
             {activeTab === "overview" && (
               <div className="space-y-8" role="tabpanel" aria-label="Overview">
-                {/* Score cards */}
                 <section>
-                  <h2 className="text-white font-bold text-lg mb-4">Horizon Europe Scores</h2>
+                  <h2 className="text-white font-bold text-lg mb-4">Paper Quality Scores</h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {result.tier !== "free" ? (
                       <>
-                        <ScoreCard label="Excellence" score={result.scores.excellence} description="Scientific quality, methodology, and state of the art" color="blue" delay={0} />
-                        <ScoreCard label="Impact" score={result.scores.impact} description="Contribution to EU policy, societal challenges, and market" color="green" delay={100} />
-                        <ScoreCard label="Implementation" score={result.scores.implementation} description="Work plan, consortium, resources, and risk management" color="amber" delay={200} />
-                        <ScoreCard label="Call Alignment" score={result.scores.callAlignment} description="Semantic match to specific call topic and expected outcomes" color="blue" delay={300} />
+                        <ScoreCard label="Citation Quality" score={result.scores.citation_quality} description="APA 7th compliance, citation density, self-citation ratio" color="amber" delay={0} />
+                        <ScoreCard label="Theoretical Depth" score={result.scores.theoretical_depth} description="Frameworks applied analytically, not decoratively" color="green" delay={100} />
+                        <ScoreCard label="Methodology Rigour" score={result.scores.methodology_rigour} description="Falsifiability, effect sizes, limitations adequacy" color="amber" delay={200} />
+                        <ScoreCard label="Domain Relevance" score={result.scores.domain_relevance} description="Contribution fits the target research community" color="blue" delay={300} />
                       </>
                     ) : (
                       <div className="sm:col-span-2 glass rounded-2xl p-8 border border-amber-500/20 text-center">
                         <p className="text-amber-400 font-bold text-lg mb-2">Full score breakdown requires Pro</p>
                         <p className="text-slate-400 text-sm mb-4">
-                          Excellence, Impact, Implementation, and Call Alignment scores are available on Pro and Enterprise plans.
+                          Citation Quality, Theoretical Depth, Methodology Rigour, and Domain Relevance scores are available on Pro and Enterprise plans.
                         </p>
                         <Link
                           href="/pricing"
                           className="inline-block bg-amber-500 hover:bg-amber-400 text-black font-bold px-6 py-2.5 rounded-xl transition-all duration-200"
                         >
-                          Upgrade to Pro — EUR 49/month
+                          Upgrade to Pro — EUR 29/month
                         </Link>
                       </div>
                     )}
                   </div>
                 </section>
 
-                {/* Strengths and weaknesses */}
                 <section className="grid md:grid-cols-2 gap-6">
                   <div className="glass rounded-2xl p-6 border border-emerald-500/20">
                     <h2 className="text-emerald-400 font-bold text-sm uppercase tracking-widest mb-4">Top Strengths</h2>
@@ -559,14 +554,14 @@ export default function AnalyzePage() {
                   {[
                     {
                       title: "PDF Report",
-                      desc: "Formatted report with all scores, findings, and recommendations. Ready to share with your consortium.",
+                      desc: "Formatted report with all scores, findings, and recommendations. Ready to share with co-authors.",
                       icon: "⬇",
                       label: "Download PDF",
-                      color: "blue",
+                      color: "amber",
                     },
                     {
                       title: "JSON Export",
-                      desc: "Machine-readable analysis data. Connect to your own tooling or the CRUCIBLE API.",
+                      desc: "Machine-readable analysis data. Connect to your own tooling or the ANVIL API.",
                       icon: "{ }",
                       label: "Download JSON",
                       color: "purple",
@@ -578,8 +573,8 @@ export default function AnalyzePage() {
                       <p className="text-slate-400 text-sm mb-6">{item.desc}</p>
                       <button
                         className={`w-full py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
-                          item.color === "blue"
-                            ? "bg-blue-600 hover:bg-blue-500 text-white"
+                          item.color === "amber"
+                            ? "bg-amber-600 hover:bg-amber-500 text-white"
                             : "bg-purple-600 hover:bg-purple-500 text-white"
                         }`}
                         onClick={() => {
@@ -588,7 +583,7 @@ export default function AnalyzePage() {
                             const url = URL.createObjectURL(blob);
                             const a = document.createElement("a");
                             a.href = url;
-                            a.download = `crucible-${result.proposalId}.json`;
+                            a.download = `anvil-${result.proposalId}.json`;
                             a.click();
                             URL.revokeObjectURL(url);
                           }

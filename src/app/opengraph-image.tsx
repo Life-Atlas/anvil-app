@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "CRUCIBLE — Horizon Europe Proposal Analyzer";
+export const alt = "ANVIL — Academic Paper Quality Scorer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -33,7 +33,7 @@ export default function OGImage() {
               width: "64px",
               height: "64px",
               borderRadius: "16px",
-              background: "linear-gradient(135deg, #3b82f6, #1d4ed8)",
+              background: "linear-gradient(135deg, #f59e0b, #b45309)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -42,7 +42,7 @@ export default function OGImage() {
               color: "white",
             }}
           >
-            C
+            A
           </div>
           <span
             style={{
@@ -52,13 +52,13 @@ export default function OGImage() {
               letterSpacing: "-1px",
             }}
           >
-            CRUCIBLE
+            ANVIL
           </span>
         </div>
 
         <h1
           style={{
-            fontSize: "56px",
+            fontSize: "52px",
             fontWeight: 900,
             color: "white",
             textAlign: "center",
@@ -67,8 +67,8 @@ export default function OGImage() {
             maxWidth: "900px",
           }}
         >
-          Horizon Europe{" "}
-          <span style={{ color: "#60a5fa" }}>Proposal Analyzer</span>
+          Academic Paper{" "}
+          <span style={{ color: "#f59e0b" }}>Quality Scorer</span>
         </h1>
 
         <p
@@ -80,8 +80,8 @@ export default function OGImage() {
             maxWidth: "700px",
           }}
         >
-          48+ anti-pattern detectors. 7-layer analysis. SMILE methodology radar.
-          Score your proposal before evaluators do.
+          Citation integrity. Theoretical depth. SMILE alignment.
+          Catch what reviewers flag — before submission.
         </p>
 
         <div
@@ -96,7 +96,7 @@ export default function OGImage() {
           <span style={{ color: "#334155" }}>|</span>
           <span>Results in 60 seconds</span>
           <span style={{ color: "#334155" }}>|</span>
-          <span>crucible.winniio.io</span>
+          <span>anvil.winniio.io</span>
         </div>
 
         <div

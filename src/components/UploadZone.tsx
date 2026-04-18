@@ -21,7 +21,7 @@ export default function UploadZone({
   const validate = useCallback(
     (file: File): string | null => {
       if (file.type !== "application/pdf" && !file.name.toLowerCase().endsWith(".pdf")) {
-        return "Only PDF files are accepted. Please upload your proposal as a .pdf file.";
+        return "Only PDF files are accepted. Please upload your research paper as a .pdf file.";
       }
       if (file.size > maxSizeMB * 1024 * 1024) {
         return `File size must be under ${maxSizeMB}MB. Your file is ${(file.size / 1024 / 1024).toFixed(1)}MB.`;
@@ -82,7 +82,7 @@ export default function UploadZone({
 
   if (selectedFile) {
     return (
-      <div className="rounded-2xl border border-blue-500/40 bg-blue-500/5 p-6 animate-fade-in">
+      <div className="rounded-2xl border border-amber-500/40 bg-amber-500/5 p-6 animate-fade-in">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center shrink-0">
             <svg className="w-6 h-6 text-red-400" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -106,7 +106,7 @@ export default function UploadZone({
         </div>
         <div className="mt-3 flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-emerald-400 text-sm font-medium">File ready for analysis</span>
+          <span className="text-emerald-400 text-sm font-medium">Paper ready for ANVIL analysis</span>
         </div>
       </div>
     );
@@ -117,7 +117,7 @@ export default function UploadZone({
       <div
         role="button"
         tabIndex={disabled ? -1 : 0}
-        aria-label="Upload PDF proposal — drag and drop or click to browse"
+        aria-label="Upload research paper PDF — drag and drop or click to browse"
         onDragOver={onDragOver}
         onDragLeave={onDragLeave}
         onDrop={onDrop}
@@ -133,8 +133,8 @@ export default function UploadZone({
           ${disabled
             ? "opacity-50 cursor-not-allowed border-slate-700"
             : isDragging
-            ? "border-blue-400 bg-blue-500/10 scale-[1.01]"
-            : "border-slate-600 hover:border-blue-500/60 hover:bg-blue-500/5"
+            ? "border-amber-400 bg-amber-500/10 scale-[1.01]"
+            : "border-slate-600 hover:border-amber-500/60 hover:bg-amber-500/5"
           }
         `}
       >
@@ -150,10 +150,10 @@ export default function UploadZone({
 
         {/* Upload icon */}
         <div className={`mx-auto mb-5 w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-200 ${
-          isDragging ? "bg-blue-500/30 scale-110" : "bg-slate-800"
+          isDragging ? "bg-amber-500/30 scale-110" : "bg-slate-800"
         }`}>
           <svg
-            className={`w-8 h-8 transition-colors ${isDragging ? "text-blue-300" : "text-slate-400"}`}
+            className={`w-8 h-8 transition-colors ${isDragging ? "text-amber-300" : "text-slate-400"}`}
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -162,26 +162,24 @@ export default function UploadZone({
             {isDragging ? (
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             ) : (
-              <>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-              </>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
             )}
           </svg>
         </div>
 
         <p className="text-white font-semibold text-lg mb-1">
-          {isDragging ? "Drop your proposal here" : "Upload your proposal PDF"}
+          {isDragging ? "Drop your paper here" : "Upload your research paper PDF"}
         </p>
         <p className="text-slate-400 text-sm mb-4">
           Drag and drop or{" "}
-          <span className="text-blue-400 underline underline-offset-2">browse files</span>
+          <span className="text-amber-400 underline underline-offset-2">browse files</span>
         </p>
         <div className="flex items-center justify-center gap-4 text-xs text-slate-600">
           <span>PDF only</span>
           <span>·</span>
           <span>Max {maxSizeMB}MB</span>
           <span>·</span>
-          <span>Horizon Europe proposals</span>
+          <span>Preprint · Submitted · Under revision</span>
         </div>
       </div>
 

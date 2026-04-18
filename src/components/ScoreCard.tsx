@@ -86,7 +86,7 @@ export default function ScoreCard({
   return (
     <div
       ref={cardRef}
-      className={`glass rounded-2xl p-6 border ${colors.border} transition-all duration-300 hover:border-blue-500/40 hover:shadow-lg ${colors.glow}`}
+      className={`glass rounded-2xl p-6 border ${colors.border} transition-all duration-300 hover:border-amber-500/40 hover:shadow-lg ${colors.glow}`}
     >
       <div className="flex items-start justify-between mb-4">
         <div>

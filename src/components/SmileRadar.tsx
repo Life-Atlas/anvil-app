@@ -17,12 +17,12 @@ interface SmileRadarProps {
 }
 
 const SMILE_LABELS: { key: keyof SmileData; label: string; full: string; color: string }[] = [
-  { key: "RE", label: "RE", full: "Reality Emulation", color: "#3b82f6" },
+  { key: "RE", label: "RE", full: "Reality Emulation",      color: "#f59e0b" },
   { key: "CE", label: "CE", full: "Concurrent Engineering", color: "#10b981" },
-  { key: "CI", label: "CI", full: "Collective Intelligence", color: "#f59e0b" },
+  { key: "CI", label: "CI", full: "Collective Intelligence", color: "#d97706" },
   { key: "CX", label: "CX", full: "Contextual Intelligence", color: "#8b5cf6" },
   { key: "CN", label: "CN", full: "Continuous Intelligence", color: "#ef4444" },
-  { key: "PW", label: "PW", full: "Perpetual Wisdom", color: "#06b6d4" },
+  { key: "PW", label: "PW", full: "Perpetual Wisdom",        color: "#06b6d4" },
 ];
 
 function polarToCart(cx: number, cy: number, r: number, angleDeg: number) {
@@ -81,15 +81,16 @@ export default function SmileRadar({ data, size = 300 }: SmileRadarProps) {
     return polarToCart(cx, cy, r, a);
   });
 
-  const dataPath = dataPoints
-    .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`)
-    .join(" ") + " Z";
+  const dataPath =
+    dataPoints
+      .map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(2)},${p.y.toFixed(2)}`)
+      .join(" ") + " Z";
 
   // Axis label positions (slightly beyond maxR)
   const labelPositions = angles.map((a) => polarToCart(cx, cy, maxR + 24, a));
 
   return (
-    <div ref={ref} className="glass rounded-2xl p-6 border border-blue-500/20">
+    <div ref={ref} className="glass rounded-2xl p-6 border border-amber-500/20">
       <h3 className="text-white font-semibold text-lg mb-1">S.M.I.L.E. Radar</h3>
       <p className="text-slate-400 text-sm mb-6">
         Sustainable Methodology for Impact Lifecycle Enablement — 6 phases
@@ -105,12 +106,12 @@ export default function SmileRadar({ data, size = 300 }: SmileRadarProps) {
           role="img"
         >
           {/* Grid rings */}
-          {rings.map(({ points, r }, i) => (
+          {rings.map(({ points }, i) => (
             <polygon
               key={i}
               points={points}
               fill="none"
-              stroke="rgba(59, 130, 246, 0.15)"
+              stroke="rgba(245,158,11,0.15)"
               strokeWidth="1"
             />
           ))}
@@ -138,7 +139,7 @@ export default function SmileRadar({ data, size = 300 }: SmileRadarProps) {
                 y1={cy}
                 x2={end.x}
                 y2={end.y}
-                stroke="rgba(59, 130, 246, 0.2)"
+                stroke="rgba(245,158,11,0.2)"
                 strokeWidth="1"
               />
             );
@@ -147,8 +148,8 @@ export default function SmileRadar({ data, size = 300 }: SmileRadarProps) {
           {/* Data polygon fill */}
           <path
             d={dataPath}
-            fill="rgba(59, 130, 246, 0.15)"
-            stroke="rgba(59, 130, 246, 0.7)"
+            fill="rgba(245,158,11,0.12)"
+            stroke="rgba(245,158,11,0.7)"
             strokeWidth="2"
             style={{ transition: "all 1s ease-out" }}
           />
@@ -189,10 +190,10 @@ export default function SmileRadar({ data, size = 300 }: SmileRadarProps) {
 
       {/* Legend */}
       <div className="grid grid-cols-3 gap-2 mt-4">
-        {SMILE_LABELS.map(({ key, full, color }, i) => {
+        {SMILE_LABELS.map(({ key, full, color }) => {
           const val = data[key] ?? 3;
           return (
-            <div key={i} className="flex items-center gap-2">
+            <div key={key} className="flex items-center gap-2">
               <div
                 className="w-2 h-2 rounded-full shrink-0"
                 style={{ backgroundColor: color }}

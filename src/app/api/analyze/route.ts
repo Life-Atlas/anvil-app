@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 
 export const runtime = "nodejs";
 
-const CRUCIBLE_API = process.env.CRUCIBLE_API_URL || "http://localhost:8100";
+const ANVIL_API = process.env.ANVIL_API_URL || process.env.CRUCIBLE_API_URL || "http://localhost:8100";
 const MAX_SIZE_BYTES = 25 * 1024 * 1024;
 
 function errorResponse(message: string, status: number) {
@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   }
 
   const file = formData.get("pdf") as File | null;
-  const callText = formData.get("callText") as string | null;
+  const venueText = formData.get("venueText") as string | null;
   const tier = (formData.get("tier") as string | null) ?? "free";
 
   if (!file) {
@@ -39,19 +39,19 @@ export async function POST(request: NextRequest) {
   const backendForm = new FormData();
   backendForm.append("pdf", file);
   backendForm.append("tier", tier);
-  if (callText?.trim()) {
-    backendForm.append("call_text", callText.trim());
+  if (venueText?.trim()) {
+    backendForm.append("venue_text", venueText.trim());
   }
 
   try {
-    const response = await fetch(`${CRUCIBLE_API}/analyze`, {
+    const response = await fetch(`${ANVIL_API}/analyze`, {
       method: "POST",
       body: backendForm,
     });
 
     if (!response.ok) {
       const err = await response.text();
-      return errorResponse(`CRUCIBLE engine error: ${err}`, response.status);
+      return errorResponse(`ANVIL engine error: ${err}`, response.status);
     }
 
     const data = await response.json();
@@ -64,21 +64,21 @@ export async function POST(request: NextRequest) {
           fileName: file.name,
           fileSizeBytes: file.size,
           tier,
-          hasCallText: Boolean(callText?.trim()),
+          hasVenueText: Boolean(venueText?.trim()),
         },
       },
       {
         status: 200,
         headers: {
           "Content-Type": "application/json",
-          "X-Crucible-Version": data.version || "5.1.0",
-          "X-Crucible-Tier": tier,
+          "X-Anvil-Version": data.version || "1.0.0",
+          "X-Anvil-Tier": tier,
         },
       }
     );
-  } catch (err) {
+  } catch {
     return errorResponse(
-      "CRUCIBLE engine not reachable. Start it with: uvicorn server:app --port 8000",
+      "ANVIL engine not reachable. Start it with: uvicorn server:app --port 8100",
       503
     );
   }
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET() {
   try {
-    const health = await fetch(`${CRUCIBLE_API}/health`);
+    const health = await fetch(`${ANVIL_API}/health`);
     const data = await health.json();
     return Response.json({
       status: "connected",
@@ -94,16 +94,16 @@ export async function GET() {
       endpoint: "POST /api/analyze",
       accepts: "multipart/form-data",
       fields: {
-        pdf: "File (required) — PDF proposal, max 25MB",
-        callText: "string (optional) — call topic text for alignment scoring",
-        tier: "string (optional) — free | single | pro | enterprise",
+        pdf: "File (required) — Research paper PDF, max 25MB",
+        venueText: "string (optional) — target journal or conference scope for venue-specific checks",
+        tier: "string (optional) — free | pro | enterprise",
       },
     });
   } catch {
     return Response.json({
       status: "disconnected",
       engine: null,
-      note: "Start CRUCIBLE engine: cd horizon-proposal-analyzer && uvicorn server:app --port 8000",
+      note: "Start ANVIL engine: uvicorn server:app --port 8100",
     });
   }
 }

@@ -3,53 +3,44 @@ import Link from "next/link";
 import PricingCard from "@/components/PricingCard";
 
 export const metadata: Metadata = {
-  title: "Pricing — CRUCIBLE EU Grant Proposal Analyzer",
+  title: "Pricing — ANVIL Academic Paper Quality Scorer",
   description:
-    "CRUCIBLE pricing: Free full analysis with all 45+ detectors. Pay EUR 9.90 per report for export. Pro EUR 49/month for unlimited. No signup required.",
+    "ANVIL pricing: Free tier with 1 paper/month and basic citation check. Pro EUR 29/month for unlimited papers and full 7-layer analysis. Enterprise for API and batch scoring.",
 };
 
 const FREE_FEATURES = [
-  { text: "All 45+ anti-pattern detectors", included: true, highlight: true },
-  { text: "Full 4-layer analysis on screen", included: true, highlight: true },
-  { text: "Score estimate (Excellence/Impact/Implementation)", included: true },
-  { text: "3 analyses per month", included: true },
+  { text: "1 paper/month", included: true, highlight: true },
+  { text: "Basic citation check (APA 7th)", included: true, highlight: true },
+  { text: "Self-citation ratio detection", included: true },
+  { text: "Top 5 quality findings", included: true },
   { text: "No signup required", included: true },
-  { text: "PDF & JSON report export", included: false },
+  { text: "Full 7-layer ANVIL analysis", included: false },
   { text: "SMILE radar (6 dimensions)", included: false },
-  { text: "Call alignment scoring", included: false },
+  { text: "PDF & JSON report export", included: false },
   { text: "Actionable fix recommendations", included: false },
 ];
 
-const SINGLE_FEATURES = [
-  { text: "Everything in Free, plus:", included: true },
-  { text: "Full PDF report with all findings", included: true, highlight: true },
-  { text: "JSON export for your workflow", included: true, highlight: true },
-  { text: "SMILE radar (6 dimensions)", included: true, highlight: true },
-  { text: "Call alignment scoring", included: true, highlight: true },
-  { text: "Actionable fix recommendations", included: true },
-  { text: "Pre-submission checklist", included: true },
-  { text: "No subscription — pay only when you need it", included: true },
-];
-
 const PRO_FEATURES = [
-  { text: "Everything in Single Analysis, plus:", included: true },
-  { text: "Unlimited analyses per month", included: true, highlight: true },
-  { text: "EIC Pathfinder scoring mode", included: true, highlight: true },
-  { text: "Strategic dimension scoring", included: true },
-  { text: "Future tech radar (3yr/5yr/10yr)", included: true },
-  { text: "Budget analysis mode", included: true },
-  { text: "Priority email support", included: true },
+  { text: "Unlimited papers per month", included: true, highlight: true },
+  { text: "Full 7-layer ANVIL analysis", included: true, highlight: true },
+  { text: "SMILE methodology radar", included: true, highlight: true },
+  { text: "Four Perspectives radar", included: true, highlight: true },
+  { text: "AEST temporal depth scoring", included: true },
+  { text: "Anonymisation compliance check", included: true },
+  { text: "PDF & JSON report export", included: true },
+  { text: "Actionable fix recommendations", included: true },
   { text: "Analysis history & comparisons", included: true },
+  { text: "Priority email support", included: true },
 ];
 
 const ENTERPRISE_FEATURES = [
   { text: "Everything in Pro, plus:", included: true },
   { text: "REST API access (500 calls/mo)", included: true, highlight: true },
-  { text: "Team accounts (up to 25 users)", included: true, highlight: true },
-  { text: "Custom SMILE phase configuration", included: true, highlight: true },
-  { text: "Batch processing (50+ proposals)", included: true },
+  { text: "Batch scoring (50+ papers)", included: true, highlight: true },
+  { text: "Custom rubrics per journal", included: true, highlight: true },
+  { text: "Team accounts (up to 25 users)", included: true },
   { text: "White-label report branding", included: true },
-  { text: "Custom anti-pattern library", included: true },
+  { text: "Custom quality issue library", included: true },
   { text: "Priority support (4h SLA)", included: true },
   { text: "Dedicated onboarding session", included: true },
   { text: "SSO / SAML integration", included: true },
@@ -57,57 +48,58 @@ const ENTERPRISE_FEATURES = [
 
 const FAQ = [
   {
-    q: "Is the free tier actually free? What's the catch?",
-    a: "No catch. You get all 45+ anti-pattern detectors, full 4-layer analysis, and score estimates — visible on screen. The free tier exists because we want every EU proposal to be better. You only pay when you want to export the report or unlock SMILE radar and call alignment.",
+    q: "What does the free tier actually check?",
+    a: "The free tier runs a basic citation integrity scan: APA 7th compliance on the reference list, self-citation ratio calculation, orphaned and ghost citation detection, and citation density per section. You receive the top 5 findings. This alone catches the issues that most commonly trigger reviewer flags.",
   },
   {
-    q: "I only submit 1-2 proposals per year. Which plan?",
-    a: "Single Analysis at EUR 9.90 per report. Most researchers submit once or twice a year — a monthly subscription doesn't make sense. Pay per report, get everything. No subscription, no commitment.",
+    q: "I submit 1-2 papers per year. Do I need Pro?",
+    a: "The free tier gives you the citation check for each submission. If you want the full 7-layer analysis including theoretical depth scoring, SMILE radar, falsifiability check, and the export PDF to share with co-authors, Pro at EUR 29/month is worthwhile for even a single paper — one revision cycle saved is worth far more.",
   },
   {
-    q: "Who needs the Pro plan?",
-    a: "Grant consultants, research offices, and NCPs who review 5+ proposals per month. At 5 analyses, Pro already pays for itself vs single reports. Plus you get EIC Pathfinder mode, budget analysis, and strategic scoring.",
+    q: "Who needs the Enterprise plan?",
+    a: "Research offices, journal editors running pre-submission services, doctoral supervisors reviewing multiple student papers per month, and consultancies offering manuscript review services. The batch API lets you score 50+ papers programmatically and the custom rubric system supports different citation standards per target venue.",
   },
   {
-    q: "Is my proposal kept confidential?",
-    a: "Yes. PDFs are processed in-memory, never stored permanently. Single Analysis and Pro users can opt into encrypted analysis history. Enterprise can run on-premises.",
+    q: "Is my paper kept confidential?",
+    a: "Yes. PDFs are processed in-memory, never stored permanently. Pro users can opt into encrypted analysis history for version comparison. Enterprise can run on-premises or in a private cloud environment.",
   },
   {
-    q: "What Horizon Europe programmes does CRUCIBLE cover?",
-    a: "Validated against Cluster 1-6 RIAs/IAs, EIC Pathfinder, EIC Accelerator, ERC, and MSCA proposals. The anti-pattern library comes from real evaluation summary reports published by the European Commission.",
+    q: "What citation styles does ANVIL support?",
+    a: "Full APA 7th edition compliance check on the free tier. Pro adds APA 6th, Chicago 17th, IEEE, Harvard, and Vancouver (medical). Enterprise adds custom citation style configuration for specific journals.",
   },
   {
-    q: "Can I use CRUCIBLE for non-EU proposals?",
-    a: "The anti-pattern detectors and SMILE radar work for any multi-party R&I proposal. Call alignment is Horizon Europe-specific. Enterprise plans include custom call configuration for other funders (EIT, BMBF, Vinnova, UKRI, NSF).",
+    q: "Can ANVIL detect all decorative citations?",
+    a: "ANVIL detects decorative citations probabilistically: it checks whether framework-specific vocabulary appears in the analysis sections after citation, whether cited theories are mentioned in the coding or analysis language, and whether the theoretical contribution section makes claims that require the framework. It is not 100% accurate — use it as a first-pass flag, not a final verdict.",
   },
   {
     q: "What if the analysis fails on my PDF?",
-    a: "If CRUCIBLE can't return results for a valid proposal PDF, you get a full refund for that single analysis or month. No questions asked.",
+    a: "If ANVIL cannot return results for a valid paper PDF, you get a full refund for that analysis month. No questions asked. For best results, ensure the PDF has a text layer (not a scanned image).",
   },
   {
-    q: "Is there a team discount?",
-    a: "Enterprise plan includes team accounts. For research offices reviewing 50+ proposals/year, contact us for volume pricing.",
+    q: "Does ANVIL work for conference papers?",
+    a: "Yes. ANVIL works for any academic manuscript: journal articles, conference papers, book chapters, and working papers. The anonymisation compliance check includes double-blind conference submission policies. Specify the target venue in the optional field for venue-specific checks.",
   },
 ];
 
 const COMPARISON_ROWS = [
-  { feature: "Anti-pattern detection", free: "All 45+", single: "All 45+", pro: "All 45+", enterprise: "All 45+ + custom" },
-  { feature: "Structural integrity (Layer 1)", free: "Full", single: "Full", pro: "Full", enterprise: "Full" },
-  { feature: "Call alignment (Layer 2)", free: "—", single: "Included", pro: "Included", enterprise: "Included" },
-  { feature: "SMILE radar (Layer 3)", free: "—", single: "6 dimensions", pro: "6 dimensions", enterprise: "6 + custom" },
-  { feature: "Score estimate", free: "On screen", single: "In report", pro: "In report", enterprise: "In report" },
-  { feature: "Fix recommendations", free: "—", single: "Included", pro: "Included", enterprise: "Included" },
-  { feature: "Pre-submission checklist", free: "—", single: "Included", pro: "Included", enterprise: "Included" },
-  { feature: "PDF report export", free: "—", single: "Included", pro: "Included", enterprise: "Included" },
-  { feature: "JSON export", free: "—", single: "Included", pro: "Included", enterprise: "Included" },
-  { feature: "Analyses per month", free: "3", single: "Pay per use", pro: "Unlimited", enterprise: "Unlimited" },
-  { feature: "EIC Pathfinder mode", free: "—", single: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Budget analysis", free: "—", single: "—", pro: "Included", enterprise: "Included" },
-  { feature: "Strategic scoring", free: "—", single: "—", pro: "Included", enterprise: "Included" },
-  { feature: "API access", free: "—", single: "—", pro: "—", enterprise: "500 calls/mo" },
-  { feature: "Team accounts", free: "—", single: "—", pro: "—", enterprise: "Up to 25" },
-  { feature: "Batch processing", free: "—", single: "—", pro: "—", enterprise: "50+ proposals" },
-  { feature: "Support", free: "Community", single: "Email", pro: "Priority email", enterprise: "4h SLA" },
+  { feature: "Papers per month", free: "1", pro: "Unlimited", enterprise: "Unlimited" },
+  { feature: "Citation integrity (Layer 1)", free: "Basic", pro: "Full APA 7th+", enterprise: "Full + custom style" },
+  { feature: "Theoretical depth (Layer 2)", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "SMILE radar (Layer 3)", free: "—", pro: "6 dimensions", enterprise: "6 + custom" },
+  { feature: "Falsifiability check (Layer 4)", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "Four Perspectives (Layer 5)", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "AEST temporal (Layer 6)", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "Anonymisation check (Layer 7)", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "Quality findings shown", free: "Top 5", pro: "All", enterprise: "All" },
+  { feature: "Fix recommendations", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "PDF report export", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "JSON export", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "Analysis history", free: "—", pro: "Included", enterprise: "Included" },
+  { feature: "API access", free: "—", pro: "—", enterprise: "500 calls/mo" },
+  { feature: "Batch scoring", free: "—", pro: "—", enterprise: "50+ papers" },
+  { feature: "Custom rubrics", free: "—", pro: "—", enterprise: "Per journal" },
+  { feature: "Team accounts", free: "—", pro: "—", enterprise: "Up to 25" },
+  { feature: "Support", free: "Community", pro: "Priority email", enterprise: "4h SLA" },
 ];
 
 export default function PricingPage() {
@@ -118,14 +110,14 @@ export default function PricingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <Link href="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                <span className="text-white font-black text-sm">C</span>
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
+                <span className="text-white font-black text-sm">A</span>
               </div>
-              <span className="text-white font-bold text-lg tracking-tight">CRUCIBLE</span>
+              <span className="text-white font-bold text-lg tracking-tight">ANVIL</span>
             </Link>
             <Link
               href="/analyze"
-              className="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all"
+              className="bg-amber-600 hover:bg-amber-500 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-all"
             >
               Try free
             </Link>
@@ -137,83 +129,73 @@ export default function PricingPage() {
         {/* Header */}
         <section className="py-20 text-center relative overflow-hidden">
           <div className="absolute inset-0" aria-hidden="true">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-amber-600/8 rounded-full blur-3xl" />
           </div>
           <div className="relative max-w-3xl mx-auto px-4 sm:px-6">
             <h1 className="text-5xl sm:text-6xl font-black text-white mb-4">
-              Free to start.<br />Pay when you need more.
+              Start free.<br />Go deep with Pro.
             </h1>
             <p className="text-slate-400 text-xl">
-              Full analysis with all 45+ detectors — free, no signup.
+              1 paper/month with basic citation check — free, no signup.
               <br />
-              Export reports and unlock advanced features when you&apos;re ready.
+              Unlock full 7-layer ANVIL analysis when you&apos;re ready.
             </p>
           </div>
         </section>
 
         {/* Pricing cards */}
         <section className="pb-24 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6 items-start">
               <PricingCard
                 tier="free"
                 name="Free"
                 price="Free"
-                description="See every problem in your proposal. No signup, no credit card, no friction."
+                description="Basic citation check for every paper. No signup, no credit card, no friction."
                 features={FREE_FEATURES}
-                ctaLabel="Start analyzing now"
+                ctaLabel="Start scoring now"
                 ctaHref="/analyze"
-              />
-
-              <PricingCard
-                tier="single"
-                name="Single Analysis"
-                price="EUR 9.90"
-                description="One full report with export. Perfect for the researcher who submits 1-2 proposals per year."
-                features={SINGLE_FEATURES}
-                ctaLabel="Buy one analysis"
-                ctaHref="/checkout/single"
-                badge="Most popular"
-                highlighted
               />
 
               <PricingCard
                 tier="pro"
                 name="Pro"
-                price="EUR 49"
-                annualPrice="EUR 39"
-                description="Unlimited analyses for consultants and research offices reviewing many proposals."
+                price="EUR 29"
+                annualPrice="EUR 23"
+                description="Unlimited papers with the full 7-layer ANVIL analysis for researchers who publish regularly."
                 features={PRO_FEATURES}
                 ctaLabel="Start Pro"
                 ctaHref="/checkout/pro"
+                badge="Most popular"
+                highlighted
               />
 
               <PricingCard
                 tier="enterprise"
                 name="Enterprise"
-                price="EUR 199"
-                description="API, teams, batch processing, and custom configuration for large organizations."
+                price="EUR 149"
+                description="API, batch scoring, and custom rubrics for research offices and consultancies."
                 features={ENTERPRISE_FEATURES}
                 ctaLabel="Contact sales"
-                ctaHref="mailto:hello@winniio.io?subject=CRUCIBLE Enterprise"
+                ctaHref="mailto:hello@winniio.io?subject=ANVIL Enterprise"
                 badge="Teams"
               />
             </div>
 
             {/* Value callout */}
-            <div className="mt-8 glass rounded-2xl p-6 border border-emerald-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-8 glass rounded-2xl p-6 border border-amber-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-lg" aria-hidden="true">
+                <div className="w-10 h-10 rounded-full bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 text-lg" aria-hidden="true">
                   &lt;
                 </div>
                 <div>
-                  <p className="text-white font-semibold">A consultant charges EUR 5,000-15,000 per review</p>
-                  <p className="text-slate-400 text-sm">CRUCIBLE gives you 60-second feedback for EUR 9.90. Run it before the consultant, or instead of one.</p>
+                  <p className="text-white font-semibold">One revision cycle costs weeks of time</p>
+                  <p className="text-slate-400 text-sm">ANVIL catches the issues reviewers flag — in 60 seconds, before submission.</p>
                 </div>
               </div>
               <Link
                 href="/analyze"
-                className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all duration-200"
+                className="shrink-0 bg-amber-600 hover:bg-amber-500 text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-all duration-200"
               >
                 Try it free first
               </Link>
@@ -223,27 +205,23 @@ export default function PricingPage() {
 
         {/* Comparison table */}
         <section className="py-24 border-t border-slate-800/60">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-black text-white text-center mb-12">Full comparison</h2>
 
             <div className="glass rounded-2xl border border-slate-700/50 overflow-x-auto">
-              {/* Table header */}
-              <div className="grid grid-cols-5 min-w-[700px] border-b border-slate-700/50">
+              <div className="grid grid-cols-4 min-w-[600px] border-b border-slate-700/50">
                 <div className="p-4 text-slate-500 text-sm font-medium">Feature</div>
                 <div className="p-4 text-center text-white font-semibold text-sm border-l border-slate-700/50">Free</div>
-                <div className="p-4 text-center text-emerald-400 font-semibold text-sm border-l border-slate-700/50 bg-emerald-500/5">
-                  Single
-                </div>
-                <div className="p-4 text-center text-blue-400 font-semibold text-sm border-l border-slate-700/50">
+                <div className="p-4 text-center text-amber-400 font-semibold text-sm border-l border-slate-700/50 bg-amber-500/5">
                   Pro
                 </div>
-                <div className="p-4 text-center text-amber-400 font-semibold text-sm border-l border-slate-700/50">Enterprise</div>
+                <div className="p-4 text-center text-amber-300 font-semibold text-sm border-l border-slate-700/50">Enterprise</div>
               </div>
 
               {COMPARISON_ROWS.map((row, i) => (
                 <div
                   key={i}
-                  className={`grid grid-cols-5 min-w-[700px] border-b border-slate-800/60 last:border-0 ${
+                  className={`grid grid-cols-4 min-w-[600px] border-b border-slate-800/60 last:border-0 ${
                     i % 2 === 0 ? "" : "bg-slate-900/30"
                   }`}
                 >
@@ -255,18 +233,11 @@ export default function PricingPage() {
                       row.free
                     )}
                   </div>
-                  <div className="p-4 text-center text-slate-300 text-sm border-l border-slate-800/60 bg-emerald-500/5">
-                    {row.single === "—" ? (
-                      <span className="text-slate-700" aria-label="Not included">—</span>
-                    ) : (
-                      <span className="text-white font-medium">{row.single}</span>
-                    )}
-                  </div>
-                  <div className="p-4 text-center text-slate-300 text-sm border-l border-slate-800/60">
+                  <div className="p-4 text-center text-slate-300 text-sm border-l border-slate-800/60 bg-amber-500/5">
                     {row.pro === "—" ? (
                       <span className="text-slate-700" aria-label="Not included">—</span>
                     ) : (
-                      <span className="text-blue-300 font-medium">{row.pro}</span>
+                      <span className="text-amber-200 font-medium">{row.pro}</span>
                     )}
                   </div>
                   <div className="p-4 text-center text-slate-300 text-sm border-l border-slate-800/60">
@@ -314,7 +285,7 @@ export default function PricingPage() {
               ))}
             </div>
 
-            <div className="mt-12 text-center glass rounded-2xl p-8 border border-blue-500/20">
+            <div className="mt-12 text-center glass rounded-2xl p-8 border border-amber-500/20">
               <p className="text-white font-bold text-lg mb-2">Still have questions?</p>
               <p className="text-slate-400 text-sm mb-6">
                 We answer within 24 hours. For enterprise demos, book a call.
@@ -322,7 +293,7 @@ export default function PricingPage() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
                   href="mailto:hello@winniio.io"
-                  className="w-full sm:w-auto glass border border-slate-700 hover:border-blue-500/40 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-200"
+                  className="w-full sm:w-auto glass border border-slate-700 hover:border-amber-500/40 text-white font-semibold px-6 py-3 rounded-xl text-sm transition-all duration-200"
                 >
                   Email us
                 </a>
@@ -330,7 +301,7 @@ export default function PricingPage() {
                   href="https://calendly.com/futurecreation"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200"
+                  className="w-full sm:w-auto bg-amber-600 hover:bg-amber-500 text-white font-bold px-6 py-3 rounded-xl text-sm transition-all duration-200"
                 >
                   Book a demo
                 </a>
@@ -343,16 +314,16 @@ export default function PricingPage() {
         <section className="py-24 border-t border-slate-800/60 text-center">
           <div className="max-w-2xl mx-auto px-4 sm:px-6">
             <h2 className="text-4xl font-black text-white mb-4">
-              Your next proposal deserves better odds
+              Your next paper deserves a better shot
             </h2>
             <p className="text-slate-400 text-lg mb-8">
-              Free. No signup. Upload your PDF and see what evaluators will flag — in 60 seconds.
+              Free. No signup. Upload your PDF and see what reviewers will flag — in 60 seconds.
             </p>
             <Link
               href="/analyze"
-              className="inline-flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-blue-500/30 hover:scale-105"
+              className="inline-flex items-center gap-3 bg-amber-600 hover:bg-amber-500 text-white font-bold px-8 py-4 rounded-xl text-lg transition-all duration-200 hover:shadow-2xl hover:shadow-amber-500/30 hover:scale-105"
             >
-              Try CRUCIBLE free
+              Try ANVIL free
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
@@ -365,10 +336,10 @@ export default function PricingPage() {
       <footer className="border-t border-slate-800/60 py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-6 h-6 rounded bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-              <span className="text-white font-black text-xs">C</span>
+            <div className="w-6 h-6 rounded bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center">
+              <span className="text-white font-black text-xs">A</span>
             </div>
-            <span className="text-white font-bold tracking-tight">CRUCIBLE</span>
+            <span className="text-white font-bold tracking-tight">ANVIL</span>
           </Link>
           <p className="text-slate-600 text-sm">2026 WINNIIO AB · Gothenburg, Sweden</p>
           <div className="flex items-center gap-4">

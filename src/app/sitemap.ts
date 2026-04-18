@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://crucible.winniio.io";
+  const base = "https://anvil.winniio.io";
 
   return [
     { url: base, lastModified: new Date(), changeFrequency: "weekly", priority: 1 },

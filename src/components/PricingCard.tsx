@@ -9,7 +9,7 @@ interface PricingFeature {
 }
 
 interface PricingCardProps {
-  tier: "free" | "single" | "pro" | "enterprise";
+  tier: "free" | "pro" | "enterprise";
   name: string;
   price: string;
   annualPrice?: string;
@@ -29,22 +29,15 @@ const tierStyles = {
     glow: "",
     priceBg: "bg-slate-800",
   },
-  single: {
-    border: "border-emerald-500/50",
-    badgeBg: "bg-emerald-500 text-white",
-    ctaBg: "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-500/25",
-    glow: "shadow-2xl shadow-emerald-500/10",
-    priceBg: "bg-emerald-500/10",
-  },
   pro: {
-    border: "border-blue-500/50",
-    badgeBg: "bg-blue-500 text-white",
-    ctaBg: "bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-500/25",
-    glow: "shadow-xl shadow-blue-500/5",
-    priceBg: "bg-blue-500/10",
+    border: "border-amber-500/50",
+    badgeBg: "bg-amber-500 text-white",
+    ctaBg: "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-500/25",
+    glow: "shadow-2xl shadow-amber-500/10",
+    priceBg: "bg-amber-500/10",
   },
   enterprise: {
-    border: "border-amber-500/30",
+    border: "border-amber-700/40",
     badgeBg: "bg-amber-500/20 text-amber-400 border border-amber-500/30",
     ctaBg: "bg-amber-500 hover:bg-amber-400 text-black font-bold",
     glow: "shadow-xl shadow-amber-500/5",
@@ -71,7 +64,7 @@ export default function PricingCard({
       className={`
         relative flex flex-col rounded-2xl border ${styles.border} ${styles.glow}
         glass transition-all duration-300 hover:scale-[1.01]
-        ${highlighted ? "ring-1 ring-blue-500/50" : ""}
+        ${highlighted ? "ring-1 ring-amber-500/50" : ""}
       `}
     >
       {badge && (
@@ -93,15 +86,12 @@ export default function PricingCard({
         <div className={`rounded-xl ${styles.priceBg} p-4 mb-6`}>
           <div className="flex items-end gap-1">
             <span className="text-4xl font-black text-white">{price}</span>
-            {price !== "Free" && tier !== "single" && (
+            {price !== "Free" && (
               <span className="text-slate-400 text-sm mb-1.5">/month</span>
-            )}
-            {tier === "single" && (
-              <span className="text-slate-400 text-sm mb-1.5">/analysis</span>
             )}
           </div>
           {annualPrice && (
-            <p className="text-emerald-400 text-sm mt-1">
+            <p className="text-amber-400 text-sm mt-1">
               or {annualPrice}/month billed annually
             </p>
           )}
@@ -144,7 +134,7 @@ export default function PricingCard({
 
       {/* CTA */}
       <div className="p-8 pt-0">
-        {ctaHref.startsWith("http") || ctaHref.startsWith("/checkout") ? (
+        {ctaHref.startsWith("http") || ctaHref.startsWith("mailto") ? (
           <a
             href={ctaHref}
             className={`block w-full py-3.5 px-6 rounded-xl text-center font-semibold transition-all duration-200 ${styles.ctaBg}`}

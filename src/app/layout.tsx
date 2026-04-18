@@ -14,33 +14,31 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://crucible.winniio.io";
-const siteName = "CRUCIBLE — EU Grant Proposal Analyzer";
+const siteUrl = "https://anvil.winniio.io";
+const siteName = "ANVIL — Academic Paper Quality Scorer";
 const siteDescription =
-  "AI-powered Horizon Europe proposal analysis. Catch the 48+ anti-patterns that cost you funding — before evaluators do. Score your proposal across Excellence, Impact, and Implementation.";
+  "Run your research paper through the ANVIL. Catch citation gaps, theoretical decorations, and structural weaknesses — before reviewers do. Built on S.M.I.L.E. methodology.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteName,
-    template: "%s | CRUCIBLE",
+    template: "%s | ANVIL",
   },
   description: siteDescription,
   keywords: [
-    "Horizon Europe proposal analyzer",
-    "EU grant proposal checker",
-    "Horizon Europe proposal score",
-    "EU funding proposal review tool",
-    "grant writing tool Europe",
-    "Horizon Europe success rate",
-    "EU research funding checker",
-    "proposal anti-patterns",
-    "SMILE methodology",
-    "Horizon Europe 2027",
-    "ERC proposal review",
-    "MSCA proposal analysis",
-    "European Research Council checker",
-    "grant proposal AI",
+    "academic paper quality scorer",
+    "research paper citation checker",
+    "APA 7th compliance tool",
+    "decorative citation detector",
+    "SMILE methodology academic",
+    "paper falsifiability check",
+    "self-citation ratio analysis",
+    "theoretical depth scoring",
+    "research paper reviewer tool",
+    "academic integrity checker",
+    "manuscript pre-submission review",
+    "paper anonymisation compliance",
   ],
   authors: [{ name: "WINNIIO AB", url: "https://winniio.io" }],
   creator: "WINNIIO AB",
@@ -60,7 +58,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_EU",
     url: siteUrl,
-    siteName: "CRUCIBLE",
+    siteName: "ANVIL",
     title: siteName,
     description: siteDescription,
   },
@@ -86,7 +84,7 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  name: "CRUCIBLE",
+  name: "ANVIL",
   applicationCategory: "BusinessApplication",
   operatingSystem: "Web",
   description: siteDescription,
@@ -107,40 +105,33 @@ const jsonLd = {
       name: "Free",
       price: "0",
       priceCurrency: "EUR",
-      description: "Basic anti-pattern scan, 3 proposals/month",
-    },
-    {
-      "@type": "Offer",
-      name: "Single Analysis",
-      price: "9.90",
-      priceCurrency: "EUR",
-      description: "One-time full 4-layer analysis with SMILE radar and score estimate",
+      description: "1 paper/month, basic citation check",
     },
     {
       "@type": "Offer",
       name: "Pro",
-      price: "49",
+      price: "29",
       priceCurrency: "EUR",
       billingDuration: "P1M",
-      description: "Full 4-layer analysis, unlimited proposals, PDF report",
+      description: "Unlimited papers, full ANVIL 7-layer analysis, PDF report",
     },
     {
       "@type": "Offer",
       name: "Enterprise",
-      price: "199",
+      price: "149",
       priceCurrency: "EUR",
       billingDuration: "P1M",
-      description: "Everything in Pro plus API access, team accounts, priority support",
+      description: "API access, batch scoring, custom rubrics, team accounts",
     },
   ],
   featureList: [
-    "Structural Integrity Analysis",
-    "Call Alignment Scoring",
-    "SMILE Methodology Radar",
-    "48+ Anti-Pattern Detection",
-    "Three Perspectives Analysis (People, Systems, Planet)",
+    "Citation Integrity — APA 7th compliance",
+    "Theoretical Depth — decorative citation detection",
+    "S.M.I.L.E. Alignment Radar",
+    "Falsifiability Check",
+    "Four Perspectives Analysis (People, Systems, Planet, AI)",
     "AEST Temporal Analysis",
-    "Reality-as-Actor Analysis",
+    "Anonymisation and Compliance",
     "PDF Report Export",
     "JSON API Export",
   ],
@@ -152,42 +143,42 @@ const faqJsonLd = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "What is CRUCIBLE?",
+      name: "What is ANVIL?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CRUCIBLE is an AI-powered static analysis tool for Horizon Europe proposals. It detects 48+ anti-patterns that evaluators commonly flag, estimates Excellence/Impact/Implementation scores, and checks alignment with the SMILE methodology — all from a single PDF upload in under 60 seconds.",
+        text: "ANVIL (Academic Narrative Verification and Integrity Layer) is an AI-powered static analysis tool for research papers. It detects citation integrity issues, decorative theoretical citations, falsifiability gaps, and structural weaknesses — all from a single PDF or Markdown upload in under 60 seconds.",
       },
     },
     {
       "@type": "Question",
-      name: "What are Horizon Europe proposal anti-patterns?",
+      name: "What is a decorative citation?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Anti-patterns are recurring structural and rhetorical mistakes that cause proposals to score below threshold. Examples include missing Theory of Change, vague KPIs, unsubstantiated novelty claims, incomplete ethics sections, and opaque budget line items. CRUCIBLE checks for 48+ documented patterns from real evaluator feedback.",
+        text: "A decorative citation occurs when a theoretical framework or author is mentioned by name to lend authority, but the framework is never actually applied analytically in the paper. For example, citing Callon or Latour on Actor-Network Theory without using ANT concepts to analyse data. ANVIL detects these patterns automatically.",
       },
     },
     {
       "@type": "Question",
-      name: "How much does CRUCIBLE cost?",
+      name: "How much does ANVIL cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CRUCIBLE offers a free tier with anti-pattern scanning (top 5 findings, 3 analyses/month), a single analysis for EUR 9.90, a Pro plan at EUR 49/month with full 4-layer analysis and unlimited proposals, and an Enterprise plan at EUR 199/month with API access and team accounts.",
+        text: "ANVIL offers a free tier with 1 paper per month and basic citation check, a Pro plan at EUR 29/month with unlimited papers and full 7-layer analysis, and an Enterprise plan at EUR 149/month with API access, batch scoring, and custom rubrics.",
       },
     },
     {
       "@type": "Question",
-      name: "How does CRUCIBLE score my proposal?",
+      name: "How does ANVIL score my paper?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "CRUCIBLE estimates scores across Excellence, Impact, and Implementation criteria (0-5 each, 15 total) based on structural evidence found in your PDF. It also generates a SMILE methodology radar across 6 phases and checks alignment with your specific call topic if provided.",
+        text: "ANVIL scores across five dimensions: citation quality, theoretical depth, methodology rigour, domain relevance, and writing quality. It also generates a SMILE radar across 6 phases, a Four Perspectives analysis, and an AEST temporal depth check.",
       },
     },
     {
       "@type": "Question",
-      name: "Is CRUCIBLE open source?",
+      name: "Is ANVIL open source?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. The CRUCIBLE analysis engine is MIT-licensed and available on GitHub. The commercial web app (TURTLESHELL) provides a hosted SaaS experience with tier-gated features, PDF reports, and API access.",
+        text: "Yes. The ANVIL analysis engine is MIT-licensed. The commercial web app provides a hosted experience with tier-gated features, PDF reports, and API access.",
       },
     },
   ],

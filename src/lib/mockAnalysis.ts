@@ -1,19 +1,20 @@
 import type { Finding } from "@/components/FindingsList";
 
-export interface CrucibleAnalysisResult {
+export interface AnvilAnalysisResult {
   proposalId: string;
   analyzedAt: string;
   proposalTitle: string;
   tier: "free" | "pro" | "enterprise";
 
   overallScore: number; // 0–100
-  fundingReadiness: "ready" | "borderline" | "not-ready";
+  publicationReadiness: "ready" | "borderline" | "not-ready";
 
   scores: {
-    excellence: number;       // 0–5
-    impact: number;           // 0–5
-    implementation: number;   // 0–5
-    callAlignment: number;    // 0–5
+    citation_quality: number;      // 0–5
+    theoretical_depth: number;     // 0–5
+    methodology_rigour: number;    // 0–5
+    domain_relevance: number;      // 0–5
+    writing_quality: number;       // 0–5
   };
 
   smile: {
@@ -63,260 +64,235 @@ export interface CrucibleAnalysisResult {
   };
 }
 
-export const MOCK_ANALYSIS: CrucibleAnalysisResult = {
-  proposalId: "mock-001",
+// Keep the exported type alias so existing imports of CrucibleAnalysisResult still resolve
+export type CrucibleAnalysisResult = AnvilAnalysisResult;
+
+export const MOCK_ANALYSIS: AnvilAnalysisResult = {
+  proposalId: "mock-paper-001",
   analyzedAt: new Date().toISOString(),
-  proposalTitle: "EDGE-VERSE: Edge-Native Digital Twin Platform for Urban Resilience",
+  proposalTitle: "Boundary Objects in Digital Twin Implementation: An Actor-Network Analysis of Municipal Infrastructure Projects",
   tier: "pro",
 
-  overallScore: 61,
-  fundingReadiness: "borderline",
+  overallScore: 58,
+  publicationReadiness: "borderline",
 
   scores: {
-    excellence: 3.2,
-    impact: 3.8,
-    implementation: 2.9,
-    callAlignment: 3.5,
+    citation_quality: 2.8,
+    theoretical_depth: 2.4,
+    methodology_rigour: 3.6,
+    domain_relevance: 4.1,
+    writing_quality: 3.3,
   },
 
   smile: {
-    RE: 4.1,
-    CE: 2.8,
-    CI: 4.2,
-    CX: 3.3,
-    CN: 2.5,
-    PW: 3.6,
+    RE: 3.8,
+    CE: 2.4,
+    CI: 3.9,
+    CX: 4.1,
+    CN: 2.2,
+    PW: 3.3,
   },
 
   perspectives: {
-    people: 3.2,
-    systems: 4.0,
-    planet: 2.4,
-    ai: 2.8,
+    people: 3.6,
+    systems: 4.2,
+    planet: 2.1,
+    ai: 2.4,
   },
 
   aest: {
-    absorb: 3.8,
-    emulate: 4.1,
-    simulate: 2.6,
-    transcend: 2.1,
+    absorb: 4.0,
+    emulate: 3.8,
+    simulate: 2.1,
+    transcend: 1.9,
   },
 
   antReality: {
-    realityAsActor: 3.5,
-    nonHumanActants: 2.8,
-    obligatoryPassage: 2.2,
-    translationMoments: 1.9,
+    realityAsActor: 3.2,
+    nonHumanActants: 2.6,
+    obligatoryPassage: 2.0,
+    translationMoments: 1.8,
   },
 
   findings: [
     {
       id: "f001",
-      title: "Theory of Change not explicitly articulated",
+      title: "Decorative ANT citation — Callon mentioned but not applied",
       description:
-        "The proposal describes activities and expected outputs but does not trace a clear causal chain from outputs → outcomes → societal impact. Evaluators operating under the Horizon Europe assessment guide explicitly look for a logic model connecting research activities to the stated Grand Challenge.",
+        "The paper cites Callon (1986) and Latour (1987) in the theoretical framework section but never applies ANT concepts (inscription, translation, obligatory passage point, interessement) to the empirical data. Actor-Network Theory is used as decoration to signal theoretical awareness rather than as an analytical lens. Reviewers familiar with ANT will identify this immediately.",
       severity: "critical",
-      layer: "Impact",
-      antiPattern: "AP-07: Missing Theory of Change",
+      layer: "Theoretical Depth",
+      antiPattern: "TD-01: Decorative Framework Citation",
       recommendation:
-        "Add a dedicated Theory of Change section (or diagram) within the Impact chapter. Show how each work package output contributes to a measurable intermediate outcome, and how those outcomes aggregate to the long-term impact. Reference SDG alignment explicitly.",
-      pageRef: "Section 2.1, p. 14",
+        "Either remove ANT from the framework and replace with a theory you actually apply, or systematically reanalyse your case data using ANT vocabulary. Identify at least one obligatory passage point in each municipal case and trace the translation moments. This will require significant revision but will transform the theoretical contribution.",
+      pageRef: "Section 2.2, pp. 6–8",
     },
     {
       id: "f002",
-      title: "Quantified KPIs absent from all work packages",
+      title: "Self-citation ratio 45% — exceeds 30% threshold",
       description:
-        "Work packages WP3 and WP5 list deliverables without SMART (Specific, Measurable, Achievable, Relevant, Time-bound) success criteria. Evaluators cannot assess whether stated targets are ambitious but realistic — a core Excellence criterion.",
+        "Of the 38 citations in the reference list, 17 are self-citations by the authors. This 45% self-citation rate significantly exceeds the commonly accepted 30% threshold and creates an appearance of citation bias. Double-blind reviewers who identify the authors through their citation patterns may flag this explicitly.",
       severity: "critical",
-      layer: "Excellence",
-      antiPattern: "AP-02: Vague Metrics",
+      layer: "Citation Integrity",
+      antiPattern: "CI-04: Self-Citation Bias",
       recommendation:
-        "For each WP deliverable, add a measurable KPI row in the Gantt table. Example: 'D3.2 Validated edge inference pipeline — KPI: <50ms latency on Raspberry Pi 5 by M18, validated in 3 pilot sites.'",
-      pageRef: "Section 1.3, pp. 22–28",
+        "Replace at least 8 self-citations with equivalent third-party literature that makes the same theoretical or empirical points. Retain self-citations only where they represent unique datasets or validated frameworks not available elsewhere in the literature.",
+      pageRef: "Reference list, pp. 18–21",
     },
     {
       id: "f003",
-      title: "Evaluator perspective not adopted in innovation claim",
+      title: "Hypothesis is not falsifiable as stated",
       description:
-        "The claim 'our platform is unique' appears three times without comparative reference to prior art. Under Horizon Europe Excellence criterion, novelty must be demonstrated against state-of-the-art, not asserted.",
+        "The central proposition — 'Digital twins improve coordination in municipal infrastructure projects' — is not falsifiable as written. 'Improve' is undefined, the comparison baseline is absent, and no operationalisation of 'coordination' is provided. A reviewer operating under Popperian standards will reject this as a research hypothesis.",
       severity: "critical",
-      layer: "Excellence",
-      antiPattern: "AP-11: Unsubstantiated Novelty",
+      layer: "Falsifiability Check",
+      antiPattern: "FA-02: Non-falsifiable Proposition",
       recommendation:
-        "Add a 'Beyond State of the Art' table comparing your approach to the 3–5 most relevant existing solutions across dimensions: edge capability, real-time sync, privacy model, open-source compliance.",
-      pageRef: "Section 1.1, p. 8",
+        "Restate the hypothesis with: a measurable dependent variable (e.g. 'coordination latency measured in days to decision'), a defined comparison condition (with vs. without digital twin support), a minimum effect size (e.g. ≥20% reduction), and a specified measurement instrument.",
+      pageRef: "Section 1.3, p. 4",
     },
     {
       id: "f004",
-      title: "Budget justification too thin for hardware costs",
+      title: "APA 7th: 6 reference entries missing DOIs",
       description:
-        "Hardware costs of €180K are listed as a single line item without breakdown. For amounts over €100K, evaluators expect per-unit cost, quantity, purpose, and procurement method.",
+        "Six journal article entries in the reference list lack DOI links despite the articles having registered DOIs. APA 7th edition (2020) mandates DOI inclusion for all journal articles where available. This signals incomplete reference management.",
       severity: "major",
-      layer: "Implementation",
-      antiPattern: "AP-33: Opaque Budget Lines",
+      layer: "Citation Integrity",
+      antiPattern: "CI-01: APA 7th Non-compliance",
       recommendation:
-        "Expand the budget narrative to include an itemised hardware list: sensor type, unit cost, quantity, deployment site, and link to WP responsible. Consider adding a procurement timeline.",
-      pageRef: "Budget Table, p. 41",
+        "Run the reference list through a DOI lookup tool (CrossRef, DOI.org) and add the missing DOIs. Check the complete list against APA 7th formatting rules — also verify author et al. thresholds (3+ authors → et al. from first citation).",
+      pageRef: "Reference list, pp. 18–21",
     },
     {
       id: "f005",
-      title: "Exploitation plan lacks market sizing",
+      title: "Planet perspective absent — no environmental framing",
       description:
-        "The exploitation section describes intended commercialisation pathways but does not quantify the addressable market (TAM/SAM). Without this, the evaluator cannot assess whether the stated exploitation pathway is credible.",
+        "The Four Perspectives analysis reveals a significant gap: the Planet dimension scores 2.1/5. The paper studies municipal infrastructure projects — exactly the domain where spatial, environmental, and GIS dimensions are most relevant — yet makes no reference to environmental impact, carbon footprint of infrastructure decisions, or geospatial data sources.",
       severity: "major",
-      layer: "Impact",
-      antiPattern: "AP-19: No Market Evidence",
+      layer: "Four Perspectives",
       recommendation:
-        "Include a market sizing paragraph referencing third-party data (IDC, Gartner, or EU reports). State TAM, SAM, and your projected 5-year market capture with supporting rationale.",
-      pageRef: "Section 2.2, p. 32",
+        "Add a paragraph in the discussion section connecting digital twin implementation to environmental decision-making: reduced material waste through virtual testing, spatial optimisation of infrastructure placement, and long-term environmental monitoring capabilities.",
+      pageRef: "Section 4, pp. 12–15",
     },
     {
       id: "f006",
-      title: "Consortium gender balance not addressed",
+      title: "No replication package or open data statement",
       description:
-        "Horizon Europe requires proposals to address gender dimension both in research content and team composition. No gender balance statement is present.",
+        "The paper presents interview data and document analysis but provides no information about data availability, anonymisation protocols, or replication package. Many journals in information systems and science & technology studies now require FAIR data statements.",
       severity: "major",
-      layer: "Implementation",
-      antiPattern: "AP-41: Missing Gender Dimension",
+      layer: "Anonymisation & Compliance",
+      antiPattern: "AC-03: No Open Data Statement",
       recommendation:
-        "Add a Gender Equality Plan paragraph. If team is imbalanced, acknowledge it and describe corrective hiring targets. For research content, consider whether the technology has differential gender impact.",
+        "Add a Data Availability Statement section specifying: interview transcripts are confidential per ethics approval (cite approval number), analysis codes and coding scheme are available from the corresponding author on reasonable request, and any documentary sources that are public are listed in an appendix.",
     },
     {
       id: "f007",
-      title: "Risk register incomplete — technology risks only",
+      title: "Effect size absent — findings stated as directional only",
       description:
-        "The risk matrix covers only technical risks. Horizon Europe evaluators expect financial, consortium, ethical, and regulatory risks to be mapped with corresponding mitigation strategies.",
+        "The results section reports that digital twins 'significantly reduced' coordination latency and 'notably improved' stakeholder alignment. No quantitative effect sizes, confidence intervals, or statistical significance values are provided despite the paper collecting structured interview data that could support quantification.",
       severity: "major",
-      layer: "Implementation",
-      antiPattern: "AP-38: Incomplete Risk Register",
+      layer: "Falsifiability Check",
+      antiPattern: "FA-05: Effect Size Absent",
       recommendation:
-        "Expand the risk table to include: partner dependency risk (key personnel departure), regulatory risk (GDPR, AI Act), market timing risk, and open-source licensing risk. For each, assign probability, impact, and named risk owner.",
-      pageRef: "Section 3.4, p. 38",
+        "Quantify the central claims: report average latency reduction with standard deviation, or if using qualitative data exclusively, explicitly reframe findings as 'descriptive' and 'exploratory' rather than 'significant' and 'notable' — terms that imply statistical warrant you have not provided.",
+      pageRef: "Section 3.2, pp. 10–12",
     },
     {
       id: "f008",
-      title: "Open access data management plan missing",
+      title: "Orphaned reference: Geels (2004) cited but not in reference list",
       description:
-        "Horizon Europe mandates a Data Management Plan (DMP) following FAIR principles. The current proposal does not include or reference a DMP.",
+        "The paper cites 'Geels (2004)' in Section 2.3 but no Geels 2004 entry appears in the reference list. This is either a missing reference or a citation to the wrong year of publication.",
       severity: "major",
-      layer: "Implementation",
-      antiPattern: "AP-43: Missing DMP",
+      layer: "Citation Integrity",
+      antiPattern: "CI-02: Orphaned Citation",
       recommendation:
-        "Add a brief DMP section referencing the FAIR data principles. Specify what data will be produced, how it will be stored, who owns it, when it will be made open, and which repository will be used (e.g., Zenodo).",
+        "Identify whether you meant Geels (2002) 'Technological transitions as evolutionary reconfiguration processes' or Geels (2004) 'From sectoral systems of innovation to socio-technical systems' and add the correct full entry to the reference list.",
+      pageRef: "Section 2.3, p. 8",
     },
     {
       id: "f009",
-      title: "Stakeholder engagement methodology underspecified",
+      title: "Limitations section is 47 words — substantively inadequate",
       description:
-        "The proposal mentions end-user workshops but does not describe the methodology for co-design, feedback loops, or validation with target communities.",
+        "The limitations section (Section 5.2) runs to only 47 words and states only that the study is limited to three municipalities. It makes no mention of selection bias in interviewee recruitment, temporal limitations of the study window, generalisability boundaries, or researcher positionality.",
       severity: "minor",
-      layer: "Impact",
+      layer: "Falsifiability Check",
+      antiPattern: "FA-06: Perfunctory Limitations",
       recommendation:
-        "Describe the stakeholder engagement process with specificity: who (job titles, organisations), when (which project months), how (workshops, surveys, advisory board), and how feedback feeds back into development.",
-      pageRef: "Section 2.1, p. 18",
+        "Expand to at least 200 words addressing: interviewee selection criteria and potential bias, time-bounding of the study, transferability conditions (what types of municipal projects would and would not generalise), and a brief positionality statement.",
+      pageRef: "Section 5.2, p. 16",
     },
     {
       id: "f010",
-      title: "Acronym overload in abstract",
+      title: "Company name 'Siemens' in methods section",
       description:
-        "The abstract introduces 11 acronyms in 250 words. Evaluators reading initial screening often read only the abstract — dense acronyms reduce comprehension and signal poor communication skills.",
+        "The methods section mentions 'the Siemens-provided digital twin platform used in Case B'. This identifies a specific commercial vendor in a way that may de-anonymise the case organisation and could compromise double-blind review if the organisation is publicly known to use this platform.",
       severity: "minor",
-      layer: "Structural Integrity",
-      antiPattern: "AP-04: Acronym Overload",
+      layer: "Anonymisation & Compliance",
+      antiPattern: "AC-01: Identifying Information",
       recommendation:
-        "Limit acronyms in the abstract to 3–4 maximum. Spell out all terms on first use. Save technical shorthand for the body sections.",
-      pageRef: "Abstract, p. 1",
+        "Replace with a generic descriptor: 'a commercial BIM-integrated digital twin platform (vendor details available post-review)'. Ensure the same anonymisation is applied to all technology-specific references that could identify participant organisations.",
+      pageRef: "Section 2.4, p. 9",
     },
     {
       id: "f011",
-      title: "TRL progression not mapped to milestones",
+      title: "AEST gap: no Transcend dimension — paper ends with the study",
       description:
-        "The proposal claims to advance from TRL 4 to TRL 7 but does not map this progression to specific milestones or deliverables, making it difficult to verify the claim.",
+        "The AEST analysis shows strong Absorb (4.0) and Emulate (3.8) — solid prior art grounding and accurate case representation — but Simulate (2.1) and Transcend (1.9) are weak. The paper does not describe how its findings can be tested in other contexts, and there is no replication or extension pathway offered to future researchers.",
       severity: "minor",
-      layer: "Excellence",
+      layer: "AEST Temporal",
       recommendation:
-        "Add a TRL progression table showing: starting TRL per technology component, target TRL at project end, the milestone/deliverable that validates each TRL step, and the validation method.",
+        "Add a 'Future Research' paragraph to the conclusion specifying: two or three testable propositions derived from the findings, the types of organisations or contexts where replication would be most informative, and whether the interview protocol or coding scheme will be made available to support systematic replication.",
+      pageRef: "Section 5.3, p. 17",
     },
     {
       id: "f012",
-      title: "Letter of Intent from key industrial partner recommended",
+      title: "Citation density in Section 3 is 0.8 citations per page",
       description:
-        "Industrial partner ACME Corp is mentioned as a key exploitation partner but no Letter of Intent (LoI) or letter of support is included in the annex.",
-      severity: "info",
-      layer: "Implementation",
+        "The methods section (Section 3, 4 pages) contains only 3 citations — a density of 0.75/page against the target of 2–3/page. This signals that the methodological choices are being presented as self-evident rather than grounded in established research methodology literature.",
+      severity: "minor",
+      layer: "Citation Integrity",
       recommendation:
-        "Obtain and attach LoIs from the two most critical non-consortium stakeholders. This significantly strengthens evaluator confidence in the exploitation pathway.",
+        "Add citations for each major methodological choice: case study design (Yin, 2018), semi-structured interview protocol (Brinkmann, 2013), thematic analysis (Braun and Clarke, 2006 or 2019 reflexive update), and purposive sampling rationale (Patton, 2015).",
+      pageRef: "Section 3, pp. 9–12",
     },
     {
       id: "f013",
-      title: "Ethics self-assessment section placeholder not completed",
+      title: "GitHub link identifies research group",
       description:
-        "Section 5 (Ethics) contains the template placeholder text from the Horizon Europe proposal template rather than actual content.",
-      severity: "critical",
-      layer: "Structural Integrity",
-      antiPattern: "AP-01: Incomplete Template",
+        "Footnote 7 contains a GitHub URL (github.com/[lab-name]/dt-study) that directly identifies the research group and breaks double-blind anonymisation.",
+      severity: "info",
+      layer: "Anonymisation & Compliance",
+      antiPattern: "AC-02: De-anonymising URL",
       recommendation:
-        "Complete the ethics section fully. Address: personal data handling, vulnerable populations, dual-use potential, and whether an Ethics Review is required. Incomplete ethics sections are grounds for administrative rejection.",
-      pageRef: "Section 5, p. 44",
-    },
-    {
-      id: "f014",
-      title: "Planet perspective absent — no environmental impact assessment",
-      description:
-        "The Three Perspectives Analysis (People / Systems / Planet) reveals a significant gap: the proposal makes no reference to spatial awareness, environmental footprint, or GIS/BIM/CIM integration. The planet dimension scores 2.4/5, well below the People (3.2) and Systems (4.0) axes. Evaluators from Cluster 5 programmes increasingly require this framing.",
-      severity: "major",
-      layer: "Impact",
-      recommendation:
-        "Add a paragraph on environmental co-benefits and spatial context. Reference any GIS datasets or BIM models used, describe the physical geography of pilot sites, and quantify expected environmental impact (e.g. energy reduction, emissions avoided).",
-      pageRef: "Section 2.1, p. 17",
-    },
-    {
-      id: "f015",
-      title: "AEST gap: no simulation layer — interventions tested in production only",
-      description:
-        "The AEST Temporal Analysis shows strong Absorb (3.8) and Emulate (4.1) scores — the proposal builds on prior art and creates a living digital representation — but Simulate (2.6) and Transcend (2.1) are weak. There is no mention of virtual testing or scenario modelling before physical deployment, and no knowledge transfer mechanism beyond the project lifetime.",
-      severity: "major",
-      layer: "Excellence",
-      recommendation:
-        "Add a simulation workstream (even lightweight scenario analysis) to WP3. For Transcend, describe how generated datasets, models, and learned patterns will be published as open artefacts for the broader community — this directly supports Horizon Europe's open science requirements.",
-      pageRef: "Section 1.3, p. 24",
-    },
-    {
-      id: "f016",
-      title: "ANT analysis: reality treated as passive substrate, not active participant",
-      description:
-        "The Actor-Network Theory (ANT) analysis identifies a structural framing problem: the physical environment is described as a data source, not a co-shaping actant. Non-human actors (sensors, standards, regulatory frameworks) are listed but not acknowledged as having agency. Critically, no obligatory passage point (boundary object) is defined — there is no shared artefact that all stakeholders must engage with to advance the project.",
-      severity: "major",
-      layer: "Impact",
-      recommendation:
-        "Reframe one deliverable (e.g. the digital twin dashboard or shared ontology) as an explicit boundary object. Add a paragraph naming the non-human actants and describing how they constrain or enable human decisions. Describe at least two translation moments where an actor's interests are re-framed to enrol them in the network.",
+        "Replace with '[GitHub repository — URL provided post-review]' or use an anonymous review link service such as anonymized.io for the submission version.",
+      pageRef: "Footnote 7, p. 10",
     },
   ],
 
   summary:
-    "EDGE-VERSE shows genuine innovation potential in edge-native digital twin infrastructure, with strong Impact framing and solid consortium composition. However, the proposal carries three critical deficiencies — an incomplete ethics section, missing Theory of Change, and absent quantified KPIs — any one of which can trigger below-threshold scores from evaluators. The implementation chapter needs significant strengthening around budget justification, risk register completeness, and data management. With targeted revision (est. 40–60 hours of work), this proposal is fundable.",
+    "This paper addresses a timely and relevant research problem with solid empirical grounding across three municipal cases. The methodology is coherent and the domain relevance is high. However, three critical deficiencies undermine publishability: ANT is cited decoratively without analytical application, the self-citation ratio of 45% exceeds acceptable thresholds, and the central proposition is not falsifiable as stated. These are not cosmetic issues — they require substantive revision. With targeted rewriting (est. 25–40 hours), this paper is publishable in an IS or STS journal.",
 
   topStrengths: [
-    "Strong alignment with Horizon Europe Cluster 4 digital and industrial transformation priorities",
-    "Diverse consortium with genuine complementarity across academic, SME, and municipal partners",
-    "Edge-native architecture addresses real privacy and latency gaps in existing DT platforms",
-    "Ambitious but technically credible scope with clear work package structure",
+    "Strong empirical grounding across three well-selected municipal infrastructure cases",
+    "High domain relevance — digital twin governance in public sector is under-researched",
+    "Methodological coherence between case study design and research questions",
+    "Writing quality is clear and readable throughout",
   ],
 
   topWeaknesses: [
-    "Ethics section left as template placeholder — administrative rejection risk",
-    "No Theory of Change connecting activities to societal impact",
-    "KPIs absent or unmeasurable across three of five work packages",
-    "Budget narrative insufficient for hardware and subcontracting line items",
+    "ANT cited but never analytically applied — decorative theory use",
+    "Self-citation ratio 45% — will trigger bias flag from reviewers",
+    "Central hypothesis is not falsifiable — 'improve coordination' undefined",
+    "Limitations section inadequate at 47 words",
   ],
 
   layers: {
-    structural: { score: 52, label: "Needs Work" },
-    callAlignment: { score: 71, label: "Good" },
-    smile: { score: 67, label: "Acceptable" },
-    antiPatterns: { count: 16, critical: 4, major: 7 },
-    perspectives: { score: 64, label: "Acceptable" },
-    aest: { score: 58, label: "Needs Work" },
-    antReality: { score: 51, label: "Needs Work" },
+    structural: { score: 64, label: "Acceptable" },
+    callAlignment: { score: 74, label: "Good" },
+    smile: { score: 63, label: "Acceptable" },
+    antiPatterns: { count: 13, critical: 3, major: 5 },
+    perspectives: { score: 60, label: "Acceptable" },
+    aest: { score: 54, label: "Needs Work" },
+    antReality: { score: 48, label: "Needs Work" },
   },
 };

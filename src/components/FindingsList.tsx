@@ -109,8 +109,8 @@ function FindingItem({ finding }: { finding: Finding }) {
         <div className="px-4 pb-4 ml-9 space-y-3">
           <p className="text-slate-300 text-sm leading-relaxed">{finding.description}</p>
           {finding.recommendation && (
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-3">
-              <p className="text-xs font-semibold text-blue-400 mb-1 uppercase tracking-wide">
+            <div className="bg-amber-500/8 border border-amber-500/20 rounded-lg p-3">
+              <p className="text-xs font-semibold text-amber-400 mb-1 uppercase tracking-wide">
                 Recommendation
               </p>
               <p className="text-slate-300 text-sm leading-relaxed">{finding.recommendation}</p>
@@ -170,7 +170,7 @@ export default function FindingsList({ findings, groupBy = "severity" }: Finding
           onClick={() => setActiveFilter("all")}
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
             activeFilter === "all"
-              ? "bg-blue-600 text-white"
+              ? "bg-amber-600 text-white"
               : "bg-slate-800 text-slate-400 hover:text-white"
           }`}
         >
